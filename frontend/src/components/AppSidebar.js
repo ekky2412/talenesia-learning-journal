@@ -6,8 +6,8 @@ import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import { logoNegative } from 'src/assets/brand/logo-negative'
-import { sygnet } from 'src/assets/brand/sygnet'
+import { logoTalenesia } from '../logo_talenesia.png'
+import { logoTalenesiaKecil } from '../logo_talenesia_kecil.png'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
@@ -30,10 +30,8 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <img className="sidebar-brand-full" src="../logo_talenesia.png" height={35} />
-        <img className="sidebar-brand-narrow" src="../logo_talenesia_kecil.png" height={35} />
-        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
+        <img className="sidebar-brand-full" src={logoTalenesia} height={35} />
+        <img className="sidebar-brand-narrow" src={logoTalenesiaKecil} height={35} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
