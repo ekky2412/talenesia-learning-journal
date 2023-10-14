@@ -6,8 +6,8 @@ import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import { logoTalenesia } from '../logo_talenesia.png'
-import { logoTalenesiaKecil } from '../logo_talenesia_kecil.png'
+import logoTalenesia from '../assets/images/logo_talenesia.png'
+import logoTalenesiaKecil from '../assets/images/logo_talenesia_kecil.png'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
