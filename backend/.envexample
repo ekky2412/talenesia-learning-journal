@@ -1,0 +1,3 @@
+# Create your env using this template
+PORT = ####
+DB_URL = #######

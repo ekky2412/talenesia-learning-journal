@@ -1,0 +1,18 @@
+{
+  "name": "talenesia-learning-journal-backend",
+  "version": "1.0.0",
+  "description": "Backend untuk Talenesia Learning Journal",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.6.2",
+    "nodemon": "^3.0.1"
+  }
+}
