@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
@@ -30,8 +30,13 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <img className="sidebar-brand-full" src={logoTalenesia} height={35} />
-        <img className="sidebar-brand-narrow" src={logoTalenesiaKecil} height={35} />
+        <img className="sidebar-brand-full" src={logoTalenesia} alt="logoTalenesia" height={35} />
+        <img
+          className="sidebar-brand-narrow"
+          src={logoTalenesiaKecil}
+          alt="logoTalenesiaKecil"
+          height={35}
+        />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

@@ -1,1 +1,28 @@
 // Here you can add other styles
+.sidebar-brand {
+  background-color: white;
+}
+
+a {
+  text-decoration: none;
+  color: #44C4F4;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #243C94;
+}
+
+a:visited {
+  color: #4C5CAC;
+}
+
+a:active {
+  color: #243C94;
+}
+
+a:disabled {
+  pointer-events: none;
+  color: #ccc;
+}
