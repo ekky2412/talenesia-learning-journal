@@ -244,7 +244,7 @@ const Peserta = () => {
                     <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell>
-                    <CTableHeaderCell>User</CTableHeaderCell>
+                    <CTableHeaderCell>Peserta</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">City</CTableHeaderCell>
                     <CTableHeaderCell>Progress</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Gender</CTableHeaderCell>
@@ -259,7 +259,7 @@ const Peserta = () => {
                         <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.user.name}</div>
+                        <a href={`peserta/${item.user.name}`}>{item.user.name}</a>
                         <div className="small text-medium-emphasis">
                           <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
                           {item.user.registered}

@@ -5,6 +5,11 @@ const Peserta = React.lazy(() => import('./views/peserta/Peserta'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
+// Jurnal
+const Tema1 = React.lazy(() => import('./views/jurnal/tema1/Tema1'))
+const Tema2 = React.lazy(() => import('./views/jurnal/tema2/Tema2'))
+const Tema3 = React.lazy(() => import('./views/jurnal/tema3/Tema3'))
+
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -55,6 +60,10 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/admin/peserta', name: 'Peserta', element: Peserta },
+  { path: '/jurnal', name: 'Jurnal', element: Tema1, exact: true },
+  { path: '/jurnal/tema1', name: 'Tema 1', element: Tema1 },
+  { path: '/jurnal/tema2', name: 'Tema 2', element: Tema2 },
+  { path: '/jurnal/tema3', name: 'Tema 3', element: Tema3 },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
