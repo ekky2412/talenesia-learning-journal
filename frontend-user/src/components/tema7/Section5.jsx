@@ -1,41 +1,23 @@
 import React, { useState } from "react";
-import {
-    Stack,
-    Text,
-    Textarea
-} from "@chakra-ui/react";
-
+import QuestionTextArea from "../commons/QuestionTextArea";
 
 const Section5 = () => {
-    // Handle Value TextArea
-    let [value5, setValue5] = React.useState('')
-    let handleValue5 = (e) => {
-        let inputValue = e.target.value
-        setValue5(inputValue)
-    }
+  const [value5, setValue5] = useState("");
 
+  const handleValue5 = (e) => {
+    setValue5(e.target.value);
+  };
 
-    return (
-        <Stack minH={'100vh'} direction={'column'} align={'center'} justify={'center'}>
-            <Text
-            fontSize='25px'
-            maxW='70vw'
-            whiteSpace='wrap'
-            >
-                Apa saja materi yang membuatmu penasaran ingin belajar lebih lagi?
-            </Text><br/>
-            <Textarea
-                value={value5}
-                onChange={handleValue5}
-                placeholder='Tulis Di Sini'
-                size='sm'
-                borderWidth={3}
-                borderRadius={20}
-                borderColor='teal.400' // Set the border color
-                boxShadow="md"
-            />
-        </Stack>
-    )
-}
+  return (
+    <QuestionTextArea
+      question="
+      Apa saja materi yang membuatmu penasaran ingin belajar lebih lagi?
+      "
+      
+      value={value5}
+      onValueChange={handleValue5}
+    />
+  );
+};
 
-export default Section5
+export default Section5;

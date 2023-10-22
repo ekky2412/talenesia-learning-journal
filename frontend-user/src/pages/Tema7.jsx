@@ -9,18 +9,8 @@ import {
   Container,
 } from "@chakra-ui/react";
 import logoTalenesia from '../assets/images/logo_talenesia.png'
-import Header from "../components/tema7/Header"
-import Section1 from "../components/tema7/section1";
-import Section2 from "../components/tema7/section2";
-import Section3 from "../components/tema7/Section3";
-import Section4 from "../components/tema7/Section4";
-import Section5 from "../components/tema7/Section5";
-import Section6 from "../components/tema7/Section6";
-import Section7 from "../components/tema7/Section7";
-import Section8 from "../components/tema7/Section8";
-import Section9 from "../components/tema7/Section9";
-import Section10 from "../components/tema7/Section10";
-import Section11 from "../components/tema7/Section11";
+import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7, Section8, Section9, Section10, Section11 } from "../components/tema7";
+
 
 const Tema7 = () => {
     return(
