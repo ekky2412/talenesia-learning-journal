@@ -1,8 +1,9 @@
 import express from "express";
 const router = express.Router();
+import * as users from "../controllers/rest/users.js";
 
 // Admin
-// router.get("/user", getUsers);
+router.get("/users", users.getUsers);
 // router.get("/user/:id", getDetailUser);
 // router.post("/user", addUser);
 

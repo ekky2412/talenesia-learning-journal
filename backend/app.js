@@ -4,15 +4,21 @@ import express from "express";
 import bodyParser from "body-parser";
 import router from "./routes/route.js";
 import cors from "cors";
+import mongoose from "mongoose";
 
 dotenv.config();
 
 const PORT = process.env.PORT;
-// Not have db yet
-// const DB_URL = process.env.DB_URL;
+const DB_URL = process.env.DB_URL;
 
-// mongoose.connect(DB_URL);
-// const db = mongoose.connection;
+mongoose.connect(DB_URL);
+const db = mongoose.connection;
+db.on('error', (error) => {
+  console.log('Database error');
+});
+db.once('connected', () => {
+  console.log('Database connected');
+});
 
 const app = express();
 

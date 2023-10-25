@@ -1,3 +1,3 @@
 # Create your env using this template
-PORT = ####
-DB_URL = #######
+PORT = 3030
+DB_URL = mongodb+srv://talenesia:qj65sjCa87P3ZWQ2@learningjournaltalenesi.u3m6o3w.mongodb.net/learningjournal
