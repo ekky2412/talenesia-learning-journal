@@ -1,12 +1,12 @@
-import { DataUser } from '../../models/user_model.js';
+import { DataUser } from "../../repositories/users/models/user_model.js";
 
 export const getUsers = async (req, res) => {
-    try {
-        let result = await DataUser.find();
-        res.send(result).status(200);
-    } catch(error) {
-        res.status(500).json({message: error.message});
-    }
+  try {
+    let result = await DataUser.find();
+    res.send(result).status(200);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const getDetailUser = async (req, res) => {};
