@@ -1,18 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const dataSchema = new mongoose.Schema({
+const dataSchema = new mongoose.Schema(
+  {
     name: {
-        required: true,
-        type: String
+      required: true,
+      type: String,
     },
     status: {
-        required: true,
-        type: String
-    }
-},
-{
+      required: true,
+      type: String,
+    },
+  },
+  {
     versionKey: false,
-    collection: 'users'
-});
+    collection: "users",
+  }
+);
 
-export const DataUser = mongoose.model('users', dataSchema);
+export const DataUser = mongoose.model("users", dataSchema);
