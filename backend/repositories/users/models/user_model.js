@@ -2,12 +2,36 @@ import mongoose from "mongoose";
 
 const dataSchema = new mongoose.Schema(
   {
-    name: {
+    email: {
       required: true,
       type: String,
     },
-    status: {
+    username: {
       required: true,
+      type: String,
+    },
+    password: {
+      required: true,
+      type: String,
+    },
+    // admin or user
+    userType: {
+      required: true,
+      type: String,
+    },
+    birthday: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    phoneNo: {
       type: String,
     },
   },
