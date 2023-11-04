@@ -9,6 +9,14 @@ export const getUserRepo = async () => {
   }
 };
 
+export const getDetailUserByRepo = async (username) => {
+  try {
+    const user = await DataUser.find({ username });
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getUserByEmailRepo = async (email) => {
   try {
     const user = await DataUser.findOne({

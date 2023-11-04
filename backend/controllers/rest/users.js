@@ -1,5 +1,8 @@
 import { DataUser } from "../../repositories/users/models/user_model.js";
-import { findUserEmailPasswordByUsecase } from "../../usecases/users/users.js";
+import {
+  findUserEmailPasswordByUsecase,
+  getDetailUserByUsecase,
+} from "../../usecases/users/users.js";
 import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
@@ -11,7 +14,18 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const getDetailUser = async (req, res) => {};
+export const getDetailUser = async (req, res) => {
+  const { username } = req.params;
+  const user = await getDetailUserByUsecase(username);
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not exist!",
+    });
+  }
+
+  res.json(user);
+};
 
 // khusus admin
 export const addUser = async (req, res) => {};
