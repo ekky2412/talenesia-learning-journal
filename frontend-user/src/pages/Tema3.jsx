@@ -7,9 +7,10 @@ import {
     Image,
     Spacer,
     Container,
+    Text,
 } from "@chakra-ui/react";
 import logoTalenesia from '../assets/images/logo_talenesia.png'
-import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7, Section8, Section9, Section10, Section11 } from "../components/tema7";
+import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7 } from "../components/tema3";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 
@@ -68,8 +69,8 @@ const Template = (props) => {
 }
 
 
-const Tema1 = (props) => {
-    console.log("🚀 ~ file: Tema1.jsx:64 ~ Tema1 ~ props:", props)
+const Tema3 = (props) => {
+    console.log("🚀 ~ file: Tema3.jsx:64 ~ Tema3 ~ props:", props)
     const [section, setSection] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
@@ -147,4 +148,4 @@ const Tema1 = (props) => {
     }
 }
 
-export default Tema1
+export default Tema3

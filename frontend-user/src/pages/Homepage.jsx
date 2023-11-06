@@ -47,7 +47,6 @@ const Homepage = () => {
             gridTemplateRows={'80px 1fr 80px'}
             gridTemplateColumns={'1fr'}
             h='100vh'
-            w='100vw'
             color='blackAlpha.700'
             fontWeight='bold'
         >
@@ -67,6 +66,7 @@ const Homepage = () => {
                                 <Text
                                     as={'span'}
                                     position={'relative'}
+                                    color={'black'}
                                     _after={{
                                         content: "''",
                                         width: 'full',
@@ -84,12 +84,12 @@ const Homepage = () => {
                                 <br />{' '}
 
                             </Heading>
-                            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
+                            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'black.200'}>
                                 Jurnal belajar ini bertujuan untuk membantu kamu untuk
                                 merefleksikan perjalanan belajar di fullstack bersama
                                 Talenesia. Jurnal ini berisi beberapa pertanyaan yang perlu
                                 dijawab. Tenang, tidak ada penilaian dari jawaban di jurnal ini.
-                                semua jawaban adalah benar.
+                                Semua jawaban adalah benar.
                             </Text>
                             <Stack direction={{ base: 'column', md: 'row' }}>
                                 <Button
