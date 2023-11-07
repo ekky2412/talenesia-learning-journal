@@ -2,6 +2,7 @@ import {
   getDetailUserByRepo,
   getUserByEmailRepo,
   addUserByRepo,
+  editUserByRepo,
 } from "../../repositories/users/users.js";
 
 export const getUsersByUsecase = async () => {};
@@ -27,6 +28,33 @@ export const addUserByUsecase = async (
   phoneNo
 ) => {
   const userToAdd = await addUserByRepo(
+    username,
+    encryptPassword,
+    email,
+    userType,
+    birthday,
+    gender,
+    education,
+    city,
+    phoneNo
+  );
+  return userToAdd;
+};
+
+export const editUserByUsecase = async (
+  id,
+  username,
+  encryptPassword,
+  email,
+  userType,
+  birthday,
+  gender,
+  education,
+  city,
+  phoneNo
+) => {
+  const userToAdd = await editUserByRepo(
+    id,
     username,
     encryptPassword,
     email,

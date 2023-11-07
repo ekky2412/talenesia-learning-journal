@@ -1,6 +1,7 @@
 import { DataUser } from "../../repositories/users/models/user_model.js";
 import {
   addUserByUsecase,
+  editUserByUsecase,
   findUserEmailPasswordByUsecase,
   getDetailUserByUsecase,
 } from "../../usecases/users/users.js";
@@ -67,6 +68,45 @@ export const addUser = async (req, res) => {
     );
     res.status(200).json({
       message: `User ${userToAdd.id} has been succefully added`,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+};
+
+export const editUser = async (req, res) => {
+  const { id } = req.params;
+  const {
+    username,
+    password,
+    email,
+    userType,
+    birthday = null,
+    gender = null,
+    education = null,
+    city = null,
+    phoneNo = null,
+  } = req.body;
+
+  try {
+    const encryptPassword = await bcrypt.hash(password, 10);
+    const userToAdd = await editUserByUsecase(
+      id,
+      username,
+      encryptPassword,
+      email,
+      userType,
+      birthday,
+      gender,
+      education,
+      city,
+      phoneNo
+    );
+
+    res.status(200).json({
+      message: `User ${userToAdd.id} has been succefully edited`,
     });
   } catch (err) {
     res.status(400).json({

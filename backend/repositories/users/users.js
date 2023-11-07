@@ -57,3 +57,33 @@ export const addUserByRepo = async (
     return err;
   }
 };
+
+export const editUserByRepo = async (
+  id,
+  username,
+  password,
+  email,
+  userType,
+  birthday,
+  gender,
+  education,
+  city,
+  phoneNo
+) => {
+  try {
+    const userToEdit = DataUser.findByIdAndUpdate(id, {
+      username,
+      password,
+      email,
+      userType,
+      birthday,
+      gender,
+      education,
+      city,
+      phoneNo,
+    });
+    return userToEdit;
+  } catch (err) {
+    return err;
+  }
+};

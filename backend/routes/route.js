@@ -5,6 +5,7 @@ import * as users from "../controllers/rest/users.js";
 // Admin
 router.get("/users", users.getUsers);
 // router.get("/user/:id", getDetailUser);
+router.post("/users/update/:id", users.editUser);
 router.post("/users", users.addUser);
 
 // User
