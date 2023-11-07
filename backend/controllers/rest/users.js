@@ -4,6 +4,14 @@ import {
   getDetailUserByUsecase,
 } from "../../usecases/users/users.js";
 import bcrypt from "bcrypt";
+// import jwt from "jsonwebtoken";
+
+// const getToken = async (payload) => {
+//   const secret = process.env.JWT_SECRET;
+//   const expiresIn = 60 * 60 * 1; //1 jam
+//   const token = jwt.sign(payload, secret, { expiresIn: expiresIn });
+//   return token;
+// };
 
 export const getUsers = async (req, res) => {
   try {
@@ -45,11 +53,14 @@ export const addLoginAuth = async (req, res) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (isPasswordValid) {
+    const data = {
+      id: user.id,
+      username: user.username,
+      user_type: user.user_type,
+    };
+    // getToken(data);
     return res.json({
-      data: {
-        email: user.email,
-        name: user.name,
-      },
+      data: data,
     });
   } else {
     return res.status(403).json({

@@ -1,7 +1,7 @@
 import {
   getDetailUserByRepo,
   getUserByEmailRepo,
-} from "../../repositories/users/users";
+} from "../../repositories/users/users.js";
 
 export const getUsersByUsecase = async () => {};
 export const getDetailUserByUsecase = async (username) => {

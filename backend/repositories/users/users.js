@@ -1,4 +1,4 @@
-import DataUser from "./models/user_model";
+import { DataUser } from "./models/user_model.js";
 
 export const getUserRepo = async () => {
   try {
