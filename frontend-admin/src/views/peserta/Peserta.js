@@ -136,7 +136,12 @@ const Peserta = () => {
 
   const [visibleAdd, setVisibleAdd] = useState(false)
   const [visibleDelete, setVisibleDelete] = useState(false)
+  const [userToDelete, setUserToDelete] = useState(null)
   const [validated, setValidated] = useState(false)
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user)
+    setVisibleDelete(true)
+  }
   const handleSubmit = (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -173,33 +178,44 @@ const Peserta = () => {
                     validated={validated}
                     onSubmit={handleSubmit}
                   >
-                    <CCol md={4}>
+                    <CCol md={6}>
                       <CFormInput
                         type="text"
-                        defaultValue="Mark"
                         feedbackValid="Looks good!"
                         id="validationCustom01"
                         label="First name"
                         required
                       />
                     </CCol>
-                    <CCol md={4}>
+                    <CCol md={6}>
                       <CFormInput
                         type="text"
-                        defaultValue="Otto"
                         feedbackValid="Looks good!"
                         id="validationCustom02"
                         label="Last name"
                         required
                       />
                     </CCol>
-                    <CCol md={4}>
+                    <CCol md={12}>
                       <CFormLabel htmlFor="validationCustomUsername">Email</CFormLabel>
                       <CInputGroup className="has-validation">
                         <CFormInput
                           type="email"
                           id="exampleFormControlInput1"
                           placeholder="name@example.com"
+                          feedbackValid="Must be 8-20 characters long."
+                          aria-describedby="exampleFormControlInputHelpInline"
+                          required
+                        />
+                      </CInputGroup>
+                    </CCol>
+                    <CCol md={12}>
+                      <CFormLabel htmlFor="validationCustomUsername">Password</CFormLabel>
+                      <CInputGroup className="has-validation">
+                        <CFormInput
+                          type="password"
+                          id="exampleFormControlInput1"
+                          placeholder="password"
                           feedbackValid="Must be 8-20 characters long."
                           aria-describedby="exampleFormControlInputHelpInline"
                           required
@@ -249,7 +265,7 @@ const Peserta = () => {
                     <CTableHeaderCell>Progress</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Gender</CTableHeaderCell>
                     <CTableHeaderCell>Activity</CTableHeaderCell>
-                    <CTableHeaderCell>Action</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -291,7 +307,7 @@ const Peserta = () => {
                         <strong>{item.activity}</strong>
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CButton color="light" onClick={() => setVisibleDelete(!visibleDelete)}>
+                        <CButton color="light" onClick={() => handleDeleteClick(item.user)}>
                           <CIcon className="text-danger" size="xl" icon={item.delete.icon} />
                         </CButton>
                         <CModal
@@ -303,7 +319,9 @@ const Peserta = () => {
                             <CModalTitle id="LiveDemoExampleLabel">Hapus Peserta</CModalTitle>
                           </CModalHeader>
                           <CModalBody>
-                            <p>Apakah anda yakin ingin menghapus {item.user.name}?</p>
+                            {userToDelete && (
+                              <p>Apakah anda yakin ingin menghapus {userToDelete.name}?</p>
+                            )}
                           </CModalBody>
                           <CModalFooter>
                             <CButton color="secondary" onClick={() => setVisibleDelete(false)}>
