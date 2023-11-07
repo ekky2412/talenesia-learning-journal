@@ -3,6 +3,7 @@ import {
   getUserByEmailRepo,
   addUserByRepo,
   editUserByRepo,
+  deleteUserByRepo,
 } from "../../repositories/users/users.js";
 
 export const getUsersByUsecase = async () => {};
@@ -66,6 +67,11 @@ export const editUserByUsecase = async (
     phoneNo
   );
   return userToAdd;
+};
+
+export const deleteUserByUsecase = async (id) => {
+  const userToDelete = await deleteUserByRepo(id);
+  return userToDelete;
 };
 
 export const addLoginAuthByUsecase = async () => {};

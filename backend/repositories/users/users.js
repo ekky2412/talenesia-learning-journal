@@ -87,3 +87,12 @@ export const editUserByRepo = async (
     return err;
   }
 };
+
+export const deleteUserByRepo = async (id) => {
+  try {
+    const userToDelete = DataUser.findByIdAndDelete(id);
+    return userToDelete;
+  } catch (err) {
+    return err;
+  }
+};

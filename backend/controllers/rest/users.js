@@ -1,6 +1,7 @@
 import { DataUser } from "../../repositories/users/models/user_model.js";
 import {
   addUserByUsecase,
+  deleteUserByUsecase,
   editUserByUsecase,
   findUserEmailPasswordByUsecase,
   getDetailUserByUsecase,
@@ -67,7 +68,7 @@ export const addUser = async (req, res) => {
       phoneNo
     );
     res.status(200).json({
-      message: `User ${userToAdd.id} has been succefully added`,
+      message: `User ${userToAdd.username} has been succefully added`,
     });
   } catch (err) {
     res.status(400).json({
@@ -106,7 +107,22 @@ export const editUser = async (req, res) => {
     );
 
     res.status(200).json({
-      message: `User ${userToAdd.id} has been succefully edited`,
+      message: `User ${userToAdd.username} has been succefully edited`,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userToDelete = await deleteUserByUsecase(id);
+    res.status(200).json({
+      message: `User with ID : ${id} has been deleted`,
+      data: userToDelete,
     });
   } catch (err) {
     res.status(400).json({
