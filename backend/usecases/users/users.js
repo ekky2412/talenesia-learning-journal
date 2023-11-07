@@ -17,6 +17,7 @@ export const getDetailUserByUsecase = async (username) => {
   return user;
 };
 
+// todo check user first then add into db
 export const addUserByUsecase = async (
   username,
   encryptPassword,
