@@ -1,6 +1,7 @@
 import {
   getDetailUserByRepo,
   getUserByEmailRepo,
+  addUserByRepo,
 } from "../../repositories/users/users.js";
 
 export const getUsersByUsecase = async () => {};
@@ -14,7 +15,31 @@ export const getDetailUserByUsecase = async (username) => {
   return user;
 };
 
-export const addUserByUsecase = async () => {};
+export const addUserByUsecase = async (
+  username,
+  encryptPassword,
+  email,
+  userType,
+  birthday,
+  gender,
+  education,
+  city,
+  phoneNo
+) => {
+  const userToAdd = await addUserByRepo(
+    username,
+    encryptPassword,
+    email,
+    userType,
+    birthday,
+    gender,
+    education,
+    city,
+    phoneNo
+  );
+  return userToAdd;
+};
+
 export const addLoginAuthByUsecase = async () => {};
 export const findUserEmailPasswordByUsecase = async (email) => {
   const user = getUserByEmailRepo(email);

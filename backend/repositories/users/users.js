@@ -27,3 +27,33 @@ export const getUserByEmailRepo = async (email) => {
     return err;
   }
 };
+
+export const addUserByRepo = async (
+  username,
+  password,
+  email,
+  userType,
+  birthday,
+  gender,
+  education,
+  city,
+  phoneNo
+) => {
+  try {
+    const userToSave = new DataUser({
+      username,
+      password,
+      email,
+      userType,
+      birthday,
+      gender,
+      education,
+      city,
+      phoneNo,
+    });
+    const saveUser = await userToSave.save();
+    return saveUser;
+  } catch (err) {
+    return err;
+  }
+};

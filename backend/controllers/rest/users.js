@@ -1,5 +1,6 @@
 import { DataUser } from "../../repositories/users/models/user_model.js";
 import {
+  addUserByUsecase,
   findUserEmailPasswordByUsecase,
   getDetailUserByUsecase,
 } from "../../usecases/users/users.js";
@@ -36,7 +37,43 @@ export const getDetailUser = async (req, res) => {
 };
 
 // khusus admin
-export const addUser = async (req, res) => {};
+// PASSWORD DI ENCRYPT PAKE BCRYPT
+// Jika user undefined has been added maka ada yang duplikat
+export const addUser = async (req, res) => {
+  const {
+    username,
+    password,
+    email,
+    userType,
+    birthday = null,
+    gender = null,
+    education = null,
+    city = null,
+    phoneNo = null,
+  } = req.body;
+
+  try {
+    const encryptPassword = await bcrypt.hash(password, 10);
+    const userToAdd = await addUserByUsecase(
+      username,
+      encryptPassword,
+      email,
+      userType,
+      birthday,
+      gender,
+      education,
+      city,
+      phoneNo
+    );
+    res.status(200).json({
+      message: `User ${userToAdd.id} has been succefully added`,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+};
 
 // saat login add JWT
 export const addLoginAuth = async (req, res) => {
@@ -56,7 +93,7 @@ export const addLoginAuth = async (req, res) => {
     const data = {
       id: user.id,
       username: user.username,
-      user_type: user.user_type,
+      userType: user.userType,
     };
     // getToken(data);
     return res.json({
