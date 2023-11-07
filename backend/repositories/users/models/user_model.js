@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import uniqueValidator from "mongoose-unique-validator";
 
 const dataSchema = new mongoose.Schema(
   {
@@ -45,8 +44,4 @@ const dataSchema = new mongoose.Schema(
   }
 );
 
-dataSchema.plugin(uniqueValidator, {
-  type: "mongoose-unique-validator",
-  message: "Error, username dan email sudah terdaftar!",
-});
 export const DataUser = mongoose.model("users", dataSchema);
