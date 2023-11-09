@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, } from 'react-router-dom';
 import Tema1 from '../pages/Tema1';
 import { Navigate } from "react-router-dom";
+import Tema6 from '../pages/Tema6';
 function TemaRouter(props) {
     const themeid = useParams().themeid
     
@@ -17,7 +18,9 @@ function TemaRouterWithSection(props) {
     console.log("🚀 ~ file: TemaRouter.jsx:21 ~ TemaRouterWithSection ~ sectionid:", sectionid)
     switch(themeid) {
         case 1:
-            return <Tema1 themeid={themeid} sectionid={sectionid}/>       
+            return <Tema1 themeid={themeid} sectionid={sectionid}/>   
+        case 6:
+        return <Tema6 themeid={themeid} sectionid={sectionid}/>      
     }
 }
 
