@@ -8,9 +8,9 @@ import {
     Image,
     Text,
 } from "@chakra-ui/react";
-import tema7bg from '../../assets/tema7bg.jpg'
+import tema3bg from '../../assets/tema3bg.png'
 
-const Header = () =>{
+const Header = () => {
     return (
         <Box padding='4' color='black'>
             <GridItem area={'header'}>
@@ -19,29 +19,27 @@ const Header = () =>{
                         <Image
                             alt="Login Image"
                             objectFit="cover"
-                            src={tema7bg}
+                            src={tema3bg}
                         />
                     </Flex>
 
-                    <Flex p={8} flex={1} align={'center'} justify={'center'}>
-                        <Stack spacing={6} w={'full'} maxW={'lg'}>
-                            <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
-                                <Text>
-                                    Membantu
-                                    <Text color={'teal.400'} as={'span'}>
-                                        {' '}Kegiatan{' '}
-                                    </Text>
-                                    HR
+                    <Flex p={9} flex={1} align={'center'} justify={'center'}>
+                        <Stack spacing={6} w={'full'} >
+                            <Text textAlign={'center'} color={'#2b388c'} fontSize={'4xl'}>Tema 3</Text>
+                            <Heading fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}>
+                                <Text color={'#8a85bf'} >
+                                    Mengerjakan Tugas-Tugas Administratif
                                 </Text>
                             </Heading>
-                            
-                            <Stack direction={{ base: 'column', md: 'row' }} align={'center'} justify={'center'}>
+
+                            <Stack direction={{ base: 'column', md: 'row' }} align={'center'} justify={'center'} mt={4}>
                                 <Button
                                     rounded={'full'}
-                                    bg={'teal.400'}
+                                    width={'30%'}
+                                    bg={'#2b388c'}
                                     color={'white'}
                                     _hover={{
-                                        bg: 'teal.500',
+                                        opacity: 0.9,
                                     }}>
                                     Mulai
                                 </Button>
@@ -50,11 +48,7 @@ const Header = () =>{
                     </Flex>
                 </Stack>
             </GridItem >
-
-            <GridItem area={'main'}>
-                
-            </GridItem >
-        </Box>
+        </Box >
     )
 }
 

@@ -9,8 +9,7 @@ import {
     Container,
 } from "@chakra-ui/react";
 import logoTalenesia from '../assets/images/logo_talenesia.png'
-import Header from "../components/tema6/Header"
-import { Section1, Section2, Section3, Section4, Section5, Section6, Section7 } from "../components/tema6";
+import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7, Section8} from "../components/tema8";
 import { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom'
 
@@ -54,7 +53,7 @@ const Template = (props) => {
 
                 <Flex justifyContent='space-between' p='4'>
                     {props.section > 1 ? <Button onClick={prevClick}>Previous</Button> : <div></div>}
-                    {props.section < 7 ? <Button onClick={nextClick}>Next</Button> : <Button >Submit</Button>}
+                    {props.section < 8 ? <Button onClick={nextClick}>Next</Button> : <Button >Submit</Button>}
                     
                 </Flex>
 
@@ -68,8 +67,8 @@ const Template = (props) => {
 }
 
 
-const Tema6 = (props) => {
-    console.log("🚀 ~ file: Tema1.jsx:64 ~ Tema1 ~ props:", props)
+const Tema8 = (props) => {
+    console.log("🚀 ~ file: Tema8.jsx:64 ~ Tema8 ~ props:", props)
     const [section, setSection] = useState(0)
     const navigate = useNavigate() 
     useEffect(() => {
@@ -119,8 +118,13 @@ const Tema6 = (props) => {
                         <Section7/>
                     </Template>
                 )
-            
+            case 8:
+                return (
+                    <Template  section={section} setSection={setSection} navigate = {navigate} themeid = {props.themeid}>
+                        <Section8/>
+                    </Template>
+                )
         }
 }
 
-export default Tema6
+export default Tema8

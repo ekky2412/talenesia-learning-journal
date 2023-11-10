@@ -8,7 +8,7 @@ import {
     Image,
     Text,
 } from "@chakra-ui/react";
-import tema7bg from '../../assets/tema7bg.jpg'
+import tema8bg from '../../assets/tema8bg.png'
 
 const Header = () =>{
     return (
@@ -19,7 +19,7 @@ const Header = () =>{
                         <Image
                             alt="Login Image"
                             objectFit="cover"
-                            src={tema7bg}
+                            src={tema8bg}
                         />
                     </Flex>
 
@@ -27,11 +27,10 @@ const Header = () =>{
                         <Stack spacing={6} w={'full'} maxW={'lg'}>
                             <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
                                 <Text>
-                                    Membantu
+                                    Persiapan
                                     <Text color={'teal.400'} as={'span'}>
-                                        {' '}Kegiatan{' '}
+                                        {' '}Kerja{' '}
                                     </Text>
-                                    HR
                                 </Text>
                             </Heading>
                             
