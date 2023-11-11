@@ -1,17 +1,17 @@
 import {
     Stack,
     Text
-  } from "@chakra-ui/react";
+} from "@chakra-ui/react";
 
-const Section1 = () =>{
+const Section1 = () => {
     return (
-        <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}  justify={'center'}>
+        <Stack minH={'80vh'} direction={{ base: 'column', md: 'row' }} justify={'center'}>
             <Text
-            fontSize='25px'
-            maxW='70vw'
-            whiteSpace='wrap'
+                fontSize='25px'
+                maxW='70vw'
+                whiteSpace='wrap'
             >
-                Memantau Tugas di Tema 6
+                Memantau Tugas di Tema 3
             </Text>
         </Stack>
     )

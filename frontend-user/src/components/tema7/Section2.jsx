@@ -1,19 +1,19 @@
 import {
     Stack,
     Text
-  } from "@chakra-ui/react";
+} from "@chakra-ui/react";
 
 
 const Section2 = () => {
     return (
-        <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} align={'center'} justify={'center'}>
+        <Stack minH={'70vh'} direction={{ base: 'column', md: 'row' }} justify={'center'}>
             <Text
-            fontSize='25px'
-            maxW='70vw'
-            whiteSpace='wrap'
+                fontSize='25px'
+                maxW='70vw'
+                whiteSpace='wrap'
             >
                 Bagaimana perasaanmu saat mengikuti kelas
-                Membantu Kegiatan HR?
+                Mengurus Keuangan Operasional Kantor?
             </Text>
         </Stack>
     )

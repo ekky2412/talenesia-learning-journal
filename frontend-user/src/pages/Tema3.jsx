@@ -4,15 +4,12 @@ import {
     Box,
     Grid,
     GridItem,
-    Image,
-    Spacer,
     Container,
-    Text,
 } from "@chakra-ui/react";
-import logoTalenesia from '../assets/images/logo_talenesia.png'
-import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7 } from "../components/tema3";
+import { Section1, Section2, Section3, Section4, Section5, Section6, Section7 } from "../components/tema3";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
+import Navbar from "../components/commons/Navbar";
 
 
 const Template = (props) => {
@@ -36,15 +33,10 @@ const Template = (props) => {
             fontWeight='bold'
         >
             <GridItem p='4' px='8' area={'nav'} >
-                <Flex minWidth='max-content' alignItems='center' gap='2'>
-                    <Image src={logoTalenesia} w='150px'></Image>
-                    <Spacer />
-                    <Button colorScheme='teal'>Log in</Button>
-                </Flex>
+                <Navbar />
             </GridItem>
 
             <Container maxW='8xl' centerContent>
-                <Header />
 
                 <Box padding='4' color='black'>
                     <GridItem area={'main'}>
@@ -70,7 +62,6 @@ const Template = (props) => {
 
 
 const Tema3 = (props) => {
-    console.log("🚀 ~ file: Tema3.jsx:64 ~ Tema3 ~ props:", props)
     const [section, setSection] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {

@@ -10,9 +10,7 @@ const Section4 = () => {
 
   return (
     <QuestionTextArea
-      question="
-      Apa saja hal yang baru saja kamu ketahui setelah mengikuti kelas?
-      "
+      question="Untuk menghadapi tantangan yang ada, Ale perlu untuk meletakkan HP jauh-jauh selama kelas berlangsung agar tidak terganggu dengan notifikasinya. Apa yang akan kamu lakukan untuk mengatasi tantanganmu saat belajar?"
       value={value4}
       onValueChange={handleValue4}
     />

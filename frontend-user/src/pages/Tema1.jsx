@@ -9,7 +9,7 @@ import {
     Container,
 } from "@chakra-ui/react";
 import logoTalenesia from '../assets/images/logo_talenesia.png'
-import { Header, Section1, Section2, Section3, Section4, Section5, Section6, Section7, Section8, Section9, Section10, Section11 } from "../components/tema7";
+import { Section1, Section2, Section3, Section4, Section5, Section6, Section7, Section8, Section9, Section10, Section11 } from "../components/tema4";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 

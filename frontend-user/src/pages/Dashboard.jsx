@@ -9,20 +9,9 @@ import logo2 from '../assets/images/logo-2.png'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import React from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
+import { steps } from '../components/commons/TemaTitle'
 
 const Dashboard = () => {
-
-    const steps = [
-        { title: 'Sesi Perkenalan' },
-        { title: 'Berkarir Sebagai Admin' },
-        { title: 'Persiapan Keahlian Sebagai Admin' },
-        { title: 'Mengerjakan Tugas-Tugas Administratif' },
-        { title: 'Pengelolaan dan Pengorganisiran Aktivitas Kantor' },
-        { title: 'Mengurus Sarana dan Prasarana Kantor' },
-        { title: 'Mengurus Keuangan Operasional Kantor' },
-        { title: 'Membantu Kegiatan HR' },
-        { title: 'Persiapan Kerja' }
-    ]
 
     const { activeStep } = useSteps({
         index: 1,

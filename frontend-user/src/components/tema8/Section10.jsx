@@ -11,7 +11,7 @@ const Section10 = () => {
   return (
     <QuestionTextArea
       question="Apa yang kamu sukai dari cara kamu berpendapat?"
-      
+
       value={value10}
       onValueChange={handleValue10}
     />

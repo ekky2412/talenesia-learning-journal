@@ -11,10 +11,9 @@ const Section9 = () => {
   return (
     <QuestionTextArea
       question="
-      Coba ingat-ingat ketika kamu menyampaikan pendapat di sesi bersama mentor atau saat mengerjakan tugas kelompok.
-      Bagaimana respon orang lain atas pendapatmu?
+      Apa yang masih ingin kamu perbaiki dari caramu menyampaikan pendapat?
       "
-      
+
       value={value9}
       onValueChange={handleValue9}
     />

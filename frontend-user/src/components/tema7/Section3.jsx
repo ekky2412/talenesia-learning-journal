@@ -10,10 +10,7 @@ const Section3 = () => {
 
   return (
     <QuestionTextArea
-      question="
-      Materi apa yang paling kamu sukai?
-      "
-      
+      question="Selama belajar di tema ini, Ale mengalami tantangan berupa kurang fokus saat mengikuti kelas. Bagi kamu, apa tantangan yang dihadapi saat mempelajari tema ini?"
       value={value3}
       onValueChange={handleValue3}
     />

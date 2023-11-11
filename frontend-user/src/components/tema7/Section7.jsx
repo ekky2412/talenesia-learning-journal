@@ -11,9 +11,9 @@ const Section7 = () => {
   return (
     <QuestionTextArea
       question="
-      Jika ada poin yang belum kamu lakukan, coba refleksikan mengapa kamu belum melakukannya?
+      Apa yang terjadi setelah itu sehingga kamu bisa bangkit lagi?
       "
-      
+
       value={value7}
       onValueChange={handleValue7}
     />

@@ -11,9 +11,9 @@ const Section8 = () => {
   return (
     <QuestionTextArea
       question="
-      Apa yang bisa lakukan untuk mengatasi hambatan tersebut?
+      Bagaimana respon orang lain atas pendapatmu?
       "
-      
+
       value={value8}
       onValueChange={handleValue8}
     />

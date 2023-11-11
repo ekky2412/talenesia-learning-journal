@@ -3,8 +3,8 @@ import { Stack, Text, Textarea } from "@chakra-ui/react";
 
 const QuestionTextArea = ({ question, value, onValueChange }) => {
   return (
-    <Stack minH={"100vh"} direction={"column"} align={"center"} justify={"center"}>
-      <Text fontSize="30px" maxW="70vw" whiteSpace="wrap">
+    <Stack direction={"column"}>
+      <Text fontSize="23px" maxW="70vw" whiteSpace="wrap" textAlign={'justify'}>
         {question}
       </Text>
       <br />
