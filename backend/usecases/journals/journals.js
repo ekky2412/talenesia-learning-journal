@@ -4,6 +4,7 @@ import {
   getUserJournalPantauThemeByRepo,
   addTugasByRepo,
   getUserJournalThemeByRepo,
+  getUserJournalThemeSectionByRepo,
 } from "../../repositories/journals/journals.js";
 
 export const getUserJournalByUsecase = async (username) => {
@@ -65,7 +66,23 @@ export const getUserJournalThemeByUsecase = async (username, theme) => {
   return journals;
 };
 
-export const getUserJournalThemeSectionByUsecase = async () => {};
+export const getUserJournalThemeSectionByUsecase = async (
+  username,
+  theme,
+  section
+) => {
+  const journals = await getUserJournalThemeSectionByRepo(
+    username,
+    theme,
+    section
+  );
+
+  if (!journals || journals.length == 0) {
+    return null;
+  }
+
+  return journals;
+};
 
 export const addUserJournalThemeSectionByUsecase = async (
   theme,
