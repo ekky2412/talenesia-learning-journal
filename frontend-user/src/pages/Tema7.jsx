@@ -13,9 +13,8 @@ const Template = (props) => {
         props.navigate(`/journal/${props.themeid}/section/${props.section - 1}`)
     }
     const nextClick = () => {
-        props.navigate(`/journal/${props.themeid}/section/${props.section + 1}`)
+        props.navigate(`/journal/${props.themeid}/section/${props.section +  1}`)
     }
-
 
     return (
         <Grid

@@ -13,7 +13,6 @@ const Section8 = () => {
       question="
       Apa yang bisa lakukan untuk mengatasi hambatan tersebut?
       "
-
       value={value8}
       onValueChange={handleValue8}
     />

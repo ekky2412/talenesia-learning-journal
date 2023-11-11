@@ -13,7 +13,6 @@ const Section7 = () => {
       question="
       Jika ada poin yang belum kamu lakukan, coba refleksikan mengapa kamu belum melakukannya?
       "
-
       value={value7}
       onValueChange={handleValue7}
     />

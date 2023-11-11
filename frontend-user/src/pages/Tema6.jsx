@@ -15,8 +15,6 @@ const Template = (props) => {
     const nextClick = () => {
         props.navigate(`/journal/${props.themeid}/section/${props.section + 1}`)
     }
-
-
     return (
         <Grid
             templateAreas={`"nav"

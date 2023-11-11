@@ -13,7 +13,6 @@ const Section3 = () => {
       question="
       Materi apa yang paling kamu sukai?
       "
-
       value={value3}
       onValueChange={handleValue3}
     />
