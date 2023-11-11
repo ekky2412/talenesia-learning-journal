@@ -1,22 +1,23 @@
-import { getUserJournalByUsecase } from "../../usecases/journals/journals";
+import { getUserJournalByUsecase } from "../../usecases/journals/journals.js";
 
 export const getUserJournal = async (req, res) => {
-  const users = await getUserJournalByUsecase();
+  const { username } = req.params;
+  const journals = await getUserJournalByUsecase(username);
 
-  if (!users) {
+  if (!journals) {
     return res.status(404).json({
       message: "User Journal not exists!",
     });
   }
 
-  let newUsers = [];
+  // let newUsers = [];
 
-  users.newUsers.forEach((p, i = 0) => {
-    newUsers[i] = p;
-    i++;
-  });
+  // users.newUsers.forEach((p, i = 0) => {
+  //   newUsers[i] = p;
+  //   i++;
+  // });
 
-  res.json(newUsers);
+  res.json(journals);
 };
 
 export const getUserJournalTheme = async (req, res) => {};

@@ -1,25 +1,25 @@
-import { getUserJournalRepo } from "../../repositories/journals/journals";
+import { getUserJournalRepo } from "../../repositories/journals/journals.js";
 
-export const getUserJournalByUsecase = async () => {
-  const users = await getUserJournalRepo();
+export const getUserJournalByUsecase = async (username) => {
+  const journals = await getUserJournalRepo(username);
 
-  if (!users || users.length == 0) {
+  if (!journals || journals.length == 0) {
     return null;
   }
 
-  let newUsers = [];
+  // let newUsers = [];
 
-  users.forEach((p, i = 0) => {
-    // newUsers[i] = {
-    //   videoID: p.videoID,
-    //   title: p.title,
-    //   urlThumbnail: p.urlThumbnail,
-    //   urlVideo: p.urlVideo,
-    // };
-    i++;
-  });
+  // users.forEach((p, i = 0) => {
+  // newUsers[i] = {
+  //   videoID: p.videoID,
+  //   title: p.title,
+  //   urlThumbnail: p.urlThumbnail,
+  //   urlVideo: p.urlVideo,
+  // };
+  //   i++;
+  // });
 
-  return newUsers;
+  return journals;
 };
 
 export const getUserJournalThemeByUsecase = async () => {};
