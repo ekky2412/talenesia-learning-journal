@@ -1,6 +1,8 @@
 import {
   addJournalByRepo,
   getUserJournalRepo,
+  getUserJournalPantauThemeByRepo,
+  addTugasByRepo,
 } from "../../repositories/journals/journals.js";
 
 export const getUserJournalByUsecase = async (username) => {
@@ -23,6 +25,33 @@ export const getUserJournalByUsecase = async (username) => {
   // });
 
   return journals;
+};
+
+export const getUserJournalPantauThemeByUsecase = async (username, theme) => {
+  const journal = getUserJournalPantauThemeByRepo(username, theme);
+  if (!journal || journal.length == 0) {
+    return null;
+  }
+  return journal;
+};
+
+export const addUserJournalPantauThemeByUsecase = async (
+  username,
+  theme,
+  noTugas,
+  sedangDikerjakan,
+  sudahDikumpulkan,
+  masukan
+) => {
+  const journalToAdd = await addTugasByRepo(
+    theme,
+    noTugas,
+    sedangDikerjakan,
+    sudahDikumpulkan,
+    masukan,
+    username
+  );
+  return journalToAdd;
 };
 
 export const getUserJournalThemeByUsecase = async () => {};

@@ -1,6 +1,8 @@
 import {
   getUserJournalByUsecase,
   addUserJournalThemeSectionByUsecase,
+  getUserJournalPantauThemeByUsecase,
+  addUserJournalPantauThemeByUsecase,
 } from "../../usecases/journals/journals.js";
 
 export const getUserJournal = async (req, res) => {
@@ -21,6 +23,48 @@ export const getUserJournal = async (req, res) => {
   // });
 
   res.json(journals);
+};
+
+export const getUserJournalPantauTheme = async (req, res) => {
+  const { username, theme } = req.params;
+  const journals = await getUserJournalPantauThemeByUsecase(username, theme);
+
+  if (!journals) {
+    return res.status(404).json({
+      message: "User Journal not exists!",
+    });
+  }
+  res.json(journals);
+};
+
+export const addUserJournalPantauTheme = async (req, res) => {
+  const { username, theme } = req.params;
+  const { noTugas, sedangDikerjakan, sudahDikumpulkan, masukan } = req.body;
+
+  try {
+    const journalToAdd = await addUserJournalPantauThemeByUsecase(
+      username,
+      theme,
+      noTugas,
+      sedangDikerjakan,
+      sudahDikumpulkan,
+      masukan
+    );
+    console.log(journalToAdd);
+    res.status(200).json({
+      username: journalToAdd.username,
+      theme: journalToAdd.theme,
+      noTugas: journalToAdd.noTugas,
+      sedangDikerjakan: journalToAdd.sedangDikerjakan,
+      sudahDikumpulkan: journalToAdd.sudahDikumpulkan,
+      masukan: journalToAdd.masukan,
+      message: `Answer successfully added!`,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
 };
 
 export const getUserJournalTheme = async (req, res) => {};
