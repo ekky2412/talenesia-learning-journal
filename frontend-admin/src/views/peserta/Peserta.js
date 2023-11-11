@@ -35,6 +35,7 @@ import avatar3 from 'src/assets/images/avatars/3.jpg'
 import avatar4 from 'src/assets/images/avatars/4.jpg'
 import avatar5 from 'src/assets/images/avatars/5.jpg'
 import avatar6 from 'src/assets/images/avatars/6.jpg'
+import { Link } from 'react-router-dom'
 
 const Peserta = () => {
   const tableExample = [
@@ -49,7 +50,7 @@ const Peserta = () => {
       progress: {
         value: 50,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
+        color: 'info',
       },
       gender: { name: 'Female', icon: cilUserFemale },
       activity: '10 sec ago',
@@ -79,7 +80,7 @@ const Peserta = () => {
       progress: {
         value: 74,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'warning',
+        color: 'info',
       },
       gender: { name: 'Male', icon: cilUser },
       activity: '1 hour ago',
@@ -92,7 +93,7 @@ const Peserta = () => {
       progress: {
         value: 98,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'danger',
+        color: 'info',
       },
       gender: { name: 'Female', icon: cilUserFemale },
       activity: 'Last month',
@@ -109,7 +110,7 @@ const Peserta = () => {
       progress: {
         value: 22,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'primary',
+        color: 'info',
       },
       gender: { name: 'Female', icon: cilUserFemale },
       activity: 'Last week',
@@ -126,7 +127,7 @@ const Peserta = () => {
       progress: {
         value: 43,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
+        color: 'info',
       },
       gender: { name: 'Male', icon: cilUser },
       activity: 'Last week',
@@ -158,7 +159,7 @@ const Peserta = () => {
           <CCard className="mb-4">
             <CCardHeader>Daftar Peserta</CCardHeader>
             <CCardBody>
-              <CButton color="primary" className="mb-2" onClick={() => setVisibleAdd(!visibleAdd)}>
+              <CButton color="primary" className="mb-4" onClick={() => setVisibleAdd(!visibleAdd)}>
                 <CIcon icon={cilPlus} className="me-2" />
                 Tambah Peserta
               </CButton>
@@ -272,26 +273,17 @@ const Peserta = () => {
                   {tableExample.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
+                        <CAvatar size="md" src={item.avatar.src} />
                       </CTableDataCell>
                       <CTableDataCell>
-                        <a href={`peserta/${item.user.name}`}>{item.user.name}</a>
-                        <div className="small text-medium-emphasis">
-                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                          {item.user.registered}
-                        </div>
+                        <Link to={`${item.user.name}`}>{item.user.name}</Link>
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
                         <strong>{item.city}</strong>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div className="clearfix">
-                          <div className="float-start">
-                            <strong>{item.progress.value}%</strong>
-                          </div>
-                          <div className="float-end">
-                            <small className="text-medium-emphasis">{item.progress.period}</small>
-                          </div>
+                        <div>
+                          <strong>{item.progress.value}%</strong>
                         </div>
                         <CProgress thin color={item.progress.color} value={item.progress.value} />
                       </CTableDataCell>

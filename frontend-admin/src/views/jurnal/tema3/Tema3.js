@@ -289,7 +289,7 @@ const Tema3 = () => {
                   {tableExample.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
+                        <CAvatar size="md" src={item.avatar.src} />
                       </CTableDataCell>
                       <CTableDataCell>
                         <a href={`../admin/peserta/${item.user.name}`}>{item.user.name}</a>
