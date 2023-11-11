@@ -12,6 +12,7 @@ import {
   addUserJournalThemeSection,
   getUserJournalPantauTheme,
   addUserJournalPantauTheme,
+  getUserJournalTheme,
 } from "../controllers/rest/journals.js";
 
 // Admin
@@ -26,7 +27,7 @@ router.post("/users/delete/:id", deleteUser);
 router.get("/journal/:username", getUserJournal);
 router.get("/journal/tugas/:username/:theme", getUserJournalPantauTheme);
 router.post("/journal/tugas/:username/:theme", addUserJournalPantauTheme);
-// router.get("/journal/:username/:theme", getUserJournalTheme);
+router.get("/journal/:username/:theme", getUserJournalTheme);
 // router.get("/journal/:username/:theme/:section", getUserJournalThemeSection);
 router.post("/journal/:username/:theme/:section", addUserJournalThemeSection);
 

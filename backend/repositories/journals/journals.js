@@ -1,9 +1,19 @@
+import { Query } from "mongoose";
 import Journal from "./models/journal-model.js";
 import Tugas from "./models/tugas-model.js";
 
 export const getUserJournalRepo = async (username) => {
   try {
-    const journals = await Journal.find({ name: username });
+    const journals = await Journal.find({ username: username });
+    return journals;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getUserJournalThemeByRepo = async (username, theme) => {
+  try {
+    const journals = await Journal.find({ username: username, noTema: theme });
     return journals;
   } catch (err) {
     return err;

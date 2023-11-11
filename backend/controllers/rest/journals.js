@@ -3,6 +3,7 @@ import {
   addUserJournalThemeSectionByUsecase,
   getUserJournalPantauThemeByUsecase,
   addUserJournalPantauThemeByUsecase,
+  getUserJournalThemeByUsecase,
 } from "../../usecases/journals/journals.js";
 
 export const getUserJournal = async (req, res) => {
@@ -67,7 +68,16 @@ export const addUserJournalPantauTheme = async (req, res) => {
   }
 };
 
-export const getUserJournalTheme = async (req, res) => {};
+export const getUserJournalTheme = async (req, res) => {
+  const { username, theme } = req.params;
+  const journals = await getUserJournalThemeByUsecase(username, theme);
+  if (!journals) {
+    return res.status(404).json({
+      message: "User Journal not exists!",
+    });
+  }
+  res.json(journals);
+};
 
 export const getUserJournalThemeSection = async (req, res) => {};
 
