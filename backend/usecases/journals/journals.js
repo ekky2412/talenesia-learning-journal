@@ -1,4 +1,7 @@
-import { getUserJournalRepo } from "../../repositories/journals/journals.js";
+import {
+  addJournalByRepo,
+  getUserJournalRepo,
+} from "../../repositories/journals/journals.js";
 
 export const getUserJournalByUsecase = async (username) => {
   const journals = await getUserJournalRepo(username);
@@ -25,3 +28,20 @@ export const getUserJournalByUsecase = async (username) => {
 export const getUserJournalThemeByUsecase = async () => {};
 
 export const getUserJournalThemeSectionByUsecase = async () => {};
+
+export const addUserJournalThemeSectionByUsecase = async (
+  theme,
+  section,
+  tipeSoal,
+  jawaban,
+  username
+) => {
+  const journalToAdd = await addJournalByRepo(
+    theme,
+    section,
+    tipeSoal,
+    jawaban,
+    username
+  );
+  return journalToAdd;
+};

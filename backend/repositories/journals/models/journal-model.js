@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const journalSchema = mongoose.Schema(
   {
-    sectionID: {
+    noTema: {
       required: true,
       type: Number,
     },
