@@ -29,6 +29,7 @@ import logo2 from '../assets/images/logo-2.png'
 import heroSvg from '../assets/hero.svg'
 import habibie from '../assets/images/habibie.png'
 import oprah from '../assets/images/oprah.png'
+import { Link } from 'react-router-dom'
 
 
 const jurnalFill = ['Tujuan belajar di fullstack'
@@ -54,7 +55,9 @@ const Homepage = () => {
                 <Flex minWidth='max-content' alignItems='center' gap='2'>
                     <Image src={logoTalenesia} w='150px'></Image>
                     <Spacer />
-                    <Button colorScheme='teal'>Log in</Button>
+                    <Link to={'/login'}>
+                        <Button colorScheme='teal'>Log in</Button>
+                    </Link>
                 </Flex>
             </GridItem>
 

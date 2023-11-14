@@ -34,25 +34,12 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
-    const navigate = useNavigate();
+
+    console.log(email)
 
     const handleShowClick = () => setShowPassword(!showPassword);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            if (email === "admin" && password === "admin") {
-                setMessage("Login successful!");
-                navigate('/')
-            } else {
-                throw new Error("Invalid email or password");
-            }
-        } catch (e) {
-            setMessage(e.message);
-            alert(message)
-        }
-    };
+
     return (
         <Grid
             templateAreas={`"header"
@@ -67,8 +54,6 @@ const Login = () => {
             <GridItem p='4' px='8' area={'header'} >
                 <Flex minWidth='max-content' alignItems='center' gap='2'>
                     <Image src={logoTalenesia} w='150px'></Image>
-                    <Spacer />
-                    <Button colorScheme='teal'>Log in</Button>
                 </Flex>
             </GridItem>
 
@@ -89,7 +74,7 @@ const Login = () => {
                             <Avatar bg="teal.500" />
                             <Heading color="teal.400">Masuk Akun Talenesia</Heading>
                             <Box minW={{ base: "100%", md: "468px" }}>
-                                <form>
+                                <form >
                                     <Stack
                                         spacing={7}
                                         p="2rem"
@@ -141,7 +126,6 @@ const Login = () => {
                                             variant="solid"
                                             colorScheme="teal"
                                             width="full"
-                                            onClick={handleLogin}
                                         >Masuk</Button>
 
                                     </Stack>

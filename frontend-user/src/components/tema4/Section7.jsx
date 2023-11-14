@@ -25,8 +25,8 @@ const Section7 = () => {
       Bagaimana respon orang lain atas pendapatmu?
       "
 
-        value={''}
-        onValueChange={''}
+        value={value7}
+        onValueChange={handleValue7}
       />
     </Stack>
   );
