@@ -4,9 +4,19 @@ import {
   addUserByRepo,
   editUserByRepo,
   deleteUserByRepo,
+  getUsersRepo,
 } from "../../repositories/users/users.js";
 
-export const getUsersByUsecase = async () => {};
+export const getUsersByUsecase = async () => {
+  const user = await getUsersRepo();
+
+  if (!user || user.length == 0) {
+    return null;
+  }
+
+  return user;
+};
+
 export const getDetailUserByUsecase = async (username) => {
   const user = await getDetailUserByRepo(username);
 

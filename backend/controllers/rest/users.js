@@ -5,6 +5,7 @@ import {
   editUserByUsecase,
   findUserEmailPasswordByUsecase,
   getDetailUserByUsecase,
+  getUsersByUsecase,
 } from "../../usecases/users/users.js";
 import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";
@@ -17,12 +18,15 @@ import bcrypt from "bcrypt";
 // };
 
 export const getUsers = async (req, res) => {
-  try {
-    let result = await DataUser.find();
-    res.send(result).status(200);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  const user = await getUsersByUsecase();
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not exist!",
+    });
   }
+
+  res.json(user);
 };
 
 export const getDetailUser = async (req, res) => {
