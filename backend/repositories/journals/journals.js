@@ -44,15 +44,12 @@ export const addJournalByRepo = async (
   username
 ) => {
   try {
-    const journalToSave = new Journal({
-      noTema: theme,
-      noSoal: section,
-      tipeSoal,
-      jawaban,
-      username,
-    });
-    const saveJournal = await journalToSave.save();
-    return saveJournal;
+    const journalToSave = await Journal.findOneAndUpdate(
+      { username: username, noTema: theme, noSoal: section },
+      { tipeSoal, jawaban },
+      { upsert: true, new: true }
+    );
+    return journalToSave;
   } catch (err) {
     return err;
   }

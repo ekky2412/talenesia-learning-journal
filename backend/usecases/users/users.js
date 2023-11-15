@@ -1,6 +1,6 @@
 import {
   getDetailUserByRepo,
-  getUserByEmailRepo,
+  getUserByUsernameRepo,
   addUserByRepo,
   editUserByRepo,
   deleteUserByRepo,
@@ -86,8 +86,8 @@ export const deleteUserByUsecase = async (id) => {
 };
 
 export const addLoginAuthByUsecase = async () => {};
-export const findUserEmailPasswordByUsecase = async (email) => {
-  const user = getUserByEmailRepo(email);
+export const findUsernamePasswordByUsecase = async (username) => {
+  const user = getUserByUsernameRepo(username);
 
   if (!user || user.length == 0) {
     return null;

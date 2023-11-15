@@ -1,9 +1,8 @@
-import { DataUser } from "../../repositories/users/models/user_model.js";
 import {
   addUserByUsecase,
   deleteUserByUsecase,
   editUserByUsecase,
-  findUserEmailPasswordByUsecase,
+  findUsernamePasswordByUsecase,
   getDetailUserByUsecase,
   getUsersByUsecase,
 } from "../../usecases/users/users.js";
@@ -137,16 +136,16 @@ export const deleteUser = async (req, res) => {
 
 // saat login add JWT
 export const addLoginAuth = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  const user = await findUserEmailPasswordByUsecase(email);
+  const user = await findUsernamePasswordByUsecase(username);
 
   if (!user) {
     return res.status(404).json({
       message: "User not found!",
     });
   }
-
+  console.log(user);
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (isPasswordValid) {
@@ -157,6 +156,7 @@ export const addLoginAuth = async (req, res) => {
     };
     // getToken(data);
     return res.json({
+      message: "success",
       data: data,
     });
   } else {

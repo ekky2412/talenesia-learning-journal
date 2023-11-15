@@ -6,6 +6,7 @@ import {
   addUser,
   editUser,
   deleteUser,
+  addLoginAuth,
 } from "../controllers/rest/users.js";
 import {
   getUserJournal,
@@ -24,7 +25,7 @@ router.post("/users/update/:id", editUser);
 router.post("/users/delete/:id", deleteUser);
 
 // User
-// router.post("/login/auth", addLoginAuth);
+router.post("/login/auth", addLoginAuth);
 router.get("/journal/:username", getUserJournal);
 router.get("/journal/tugas/:username/:theme", getUserJournalPantauTheme);
 router.post("/journal/tugas/:username/:theme", addUserJournalPantauTheme);

@@ -29,6 +29,17 @@ export const getUserByEmailRepo = async (email) => {
   }
 };
 
+export const getUserByUsernameRepo = async (username) => {
+  try {
+    const user = await DataUser.findOne({
+      username: username,
+    });
+    return user;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const addUserByRepo = async (
   username,
   password,
