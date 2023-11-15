@@ -74,8 +74,8 @@ export const addTugasByRepo = async (
 ) => {
   try {
     const tugasToSave = await Tugas.findOneAndUpdate(
-      { username: username, noTema: theme },
-      { tugas, sedangDikerjakan, sudahDikumpulkan, masukan },
+      { username: username, noTema: theme, noTugas: tugas },
+      { sedangDikerjakan, sudahDikumpulkan, masukan },
       { upsert: true, new: true }
     );
     return tugasToSave;

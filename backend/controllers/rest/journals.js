@@ -41,28 +41,40 @@ export const getUserJournalPantauTheme = async (req, res) => {
 
 export const addUserJournalPantauTheme = async (req, res) => {
   const { username, theme } = req.params;
-  const { noTugas, sedangDikerjakan, sudahDikumpulkan, masukan } = req.body;
-
+  let journalToAdd = [];
+  var i = 0;
   try {
-    const journalToAdd = await addUserJournalPantauThemeByUsecase(
-      username,
-      theme,
-      noTugas,
-      sedangDikerjakan,
-      sudahDikumpulkan,
-      masukan
-    );
-    console.log(journalToAdd);
+    for (var key in req.body) {
+      console.log(req.body.hasOwnProperty(key));
+      if (req.body.hasOwnProperty(key)) {
+        if (
+          typeof req.body[key].noTugas == "undefined" ||
+          typeof req.body[key].sedangDikerjakan == "undefined" ||
+          typeof req.body[key].sudahDikumpulkan == "undefined" ||
+          typeof req.body[key].masukan == "undefined"
+        ) {
+          throw Error("Body tidak boleh kosong!");
+        }
+        const journal = await addUserJournalPantauThemeByUsecase(
+          username,
+          theme,
+          req.body[key].noTugas,
+          req.body[key].sedangDikerjakan,
+          req.body[key].sudahDikumpulkan,
+          req.body[key].masukan
+        );
+        console.log(journal);
+        journalToAdd[i] = journal;
+        i++;
+      }
+    }
+
     res.status(200).json({
-      username: journalToAdd.username,
-      theme: journalToAdd.theme,
-      noTugas: journalToAdd.noTugas,
-      sedangDikerjakan: journalToAdd.sedangDikerjakan,
-      sudahDikumpulkan: journalToAdd.sudahDikumpulkan,
-      masukan: journalToAdd.masukan,
       message: `Answer successfully added!`,
+      data: journalToAdd,
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json({
       message: err.message,
     });
@@ -82,11 +94,21 @@ export const getUserJournalTheme = async (req, res) => {
 
 export const getUserJournalThemeSection = async (req, res) => {
   const { username, theme, section } = req.params;
-  const journals = await getUserJournalThemeSectionByUsecase(
-    username,
-    theme,
-    section
-  );
+  let journals;
+  try {
+    if (section === "1") {
+      journals = await getUserJournalPantauThemeByUsecase(username, theme);
+    } else {
+      journals = await getUserJournalThemeSectionByUsecase(
+        username,
+        theme,
+        section
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
   if (!journals) {
     return res.status(404).json({
       message: "User Journal not exists!",
@@ -100,6 +122,18 @@ export const addUserJournalThemeSection = async (req, res) => {
   const { tipeSoal, jawaban } = req.body;
 
   try {
+    if (section == "1") {
+      throw Error("Gunakan endpoint /journal/tugas/:username/:theme");
+    }
+    if (
+      typeof tipeSoal == "undefined" ||
+      !tipeSoal ||
+      typeof jawaban == "undefined" ||
+      !jawaban
+    ) {
+      throw Error("tipeSoal dan jawaban tidak boleh kosong!");
+    }
+
     const addJournal = await addUserJournalThemeSectionByUsecase(
       theme,
       section,
@@ -107,7 +141,6 @@ export const addUserJournalThemeSection = async (req, res) => {
       jawaban,
       username
     );
-
     res.status(200).json({
       username: addJournal.username,
       theme: addJournal.theme,
