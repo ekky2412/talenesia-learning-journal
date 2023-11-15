@@ -5,7 +5,7 @@ import {
 
 const Section1 = () => {
     return (
-        <Stack minH={'80vh'} direction={{ base: 'column', md: 'row' }} justify={'center'}>
+        <Stack minH={'70vh'} direction={{ base: 'column', md: 'row' }} justify={'center'}>
             <Text
                 fontSize='25px'
                 maxW='70vw'

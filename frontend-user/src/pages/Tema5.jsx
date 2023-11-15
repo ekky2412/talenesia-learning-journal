@@ -10,11 +10,12 @@ import Navbar from "../components/commons/Navbar";
 const Template = (props) => {
 
     const prevClick = () => {
-        props.navigate(`/journal/${props.themeid}/section/${props.section - 1}`)
+        props.navigate(`/journal/${props.username}/${props.themeid}/${props.section - 1}`)
     }
     const nextClick = () => {
-        props.navigate(`/journal/${props.themeid}/section/${props.section + 1}`)
+        props.navigate(`/journal/${props.username}/${props.themeid}/${props.section + 1}`)
     }
+
 
 
     return (
@@ -65,55 +66,55 @@ const Tema5 = (props) => {
     switch (section) {
         case 1:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section1 />
                 </Template>
             )
         case 2:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section2 />
                 </Template>
             )
         case 3:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section3 />
                 </Template>
             )
         case 4:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section4 />
                 </Template>
             )
         case 5:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section5 />
                 </Template>
             )
         case 6:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section6 />
                 </Template>
             )
         case 7:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section7 />
                 </Template>
             )
         case 8:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section8 />
                 </Template>
             )
         case 9:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username}>
                     <Section9 />
                 </Template>
             )

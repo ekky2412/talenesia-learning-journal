@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-    Grid, GridItem, Flex, Image, Box, Stack, Heading, Button, Text, Link as ChakraLink
+    Grid, GridItem, Flex, Image, Box, Stack, Heading, Button, Text
 } from '@chakra-ui/react'
-import { useParams, Link as ReactRouterLink } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { steps } from '../components/commons/TemaTitle'
 import Navbar from '../components/commons/Navbar'
 
@@ -46,24 +46,18 @@ const HeadersTema = () => {
                                     </Heading>
 
                                     <Stack direction={{ base: 'column', md: 'row' }} align={'center'} justify={'center'} mt={4}>
-
-                                        <Button
-                                            rounded={'full'}
-                                            width={'30%'}
-                                            bg={'#2b388c'}
-                                            color={'white'}
-                                            _hover={{
-                                                bg: '#2b388c',
-                                                opacity: 0.9,
-                                            }}>
-                                            <ChakraLink
-                                                _hover={{ textDecoration: 'none' }}
-                                                as={ReactRouterLink}
-                                                to={`/journal/${themeId}/section/1`}
-                                            >
+                                        <Link to={'./1'}>
+                                            <Button
+                                                bg={'#2b388c'}
+                                                rounded={'full'}
+                                                color={'white'}
+                                                _hover={{
+                                                    bg: '#2b388c',
+                                                    opacity: 0.9,
+                                                }}>
                                                 Mulai
-                                            </ChakraLink>
-                                        </Button>
+                                            </Button>
+                                        </Link>
                                     </Stack>
                                 </Stack>
                             </Flex>

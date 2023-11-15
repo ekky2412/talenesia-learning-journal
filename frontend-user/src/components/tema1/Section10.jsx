@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
 import { Stack, Text } from "@chakra-ui/react";
 
-const Section5 = (props) => {
+const Section10 = (props) => {
   const [data, setData] = useState({
     tipeSoal: 'isian',
     jawaban: ''
@@ -24,14 +24,17 @@ const Section5 = (props) => {
         maxW='70vw'
         whiteSpace='wrap'
       >
-        Ale mengalami kebingungan dengan rumus-rumus excel.
-        Meskipun sudah diberikan contoh beberapa kali, Ale tetap
-        saja kesulitan dalam menuliskan rumus Excel. Tetapi Ale tidak
-        ingin menyerah. Ia menonton ulang video pembelajaran dan
-        meminta bantuan mentor.      </Text>
+        Ale adalah salah satu peserta program pelatihan admin.
+        Ale awalnya sangat bersemangat mengikuti kelas karena
+        merasa ini akan merubah hidup Ale. Tapi ternyata Ale tidak
+        serius mengerjakan tugas, tidak bertanya ketika tidak paham.
+        Akhirnya Ale tetap saja kesulitan mendapat kerja.
+      </Text>
       <QuestionTextArea
-        question="Apa yang akan kamu lakukan untuk memahami hal-hal kamu
-        masih merasa bingung?"
+        question="Seperti ale, setiap orang pasti punya kebiasaan yang
+        menghambatnya untuk belajar maksimal. Tidak usah malu,
+        orang pada umumnya memiliki kebiasaan buruk. Apa
+        kebiasaan yang menghambatmu untuk belajar maksimal?"
         value={data.jawaban}
         onValueChange={handleValue}
       />
@@ -39,4 +42,4 @@ const Section5 = (props) => {
   );
 };
 
-export default Section5;
+export default Section10;

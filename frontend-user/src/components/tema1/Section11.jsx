@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Stack } from "@chakra-ui/react";
 
-const Section10 = () => {
+const Section11 = () => {
 
   return (
     <Stack minH={'70vh'} direction={{ base: 'column', md: 'column' }} justify={'center'} gap={8}>
@@ -11,12 +11,11 @@ const Section10 = () => {
         whiteSpace='wrap'
         textAlign={'justify'}
       >
-        Wah, tidak terasa sudah sebulan kamu mencatat di kalender
-        kebiasaan-kebiasaan baru yang kamu terapkan. Di bulan
-        kedua, tantangan belajar tentu saja lebih susah. Mungkin kamu
-        menemukan kebiasan lain yang menghambat kamu untuk
-        melangkah lebih jauh dalam belajar dan mengembangkan
-        karir.
+        Jangan khawatir, kita selalu bisa mengganti kebiasaan buruk
+        kita dengan kebiasaan pengganti. Ale yang biasanya tidak
+        serius mengerjakan tugas, mencoba membagi tugas menjadi
+        bagian-bagian yang terasa lebih mudah. Ale pun menjadi
+        lebih semangat dan serius mengerjakan tugas.
       </Text>
       <Text
         fontSize='25px'
@@ -24,10 +23,10 @@ const Section10 = () => {
         whiteSpace='wrap'
         textAlign={'justify'}
       >
-        Tuliskan kebiasaan-kebiasaanmu yang ingin kamu ubah!
+        Tuliskan kebiasaan-kebiasaanmu yang ingin kamu ubah
       </Text>
     </Stack>
   );
 };
 
-export default Section10;
+export default Section11;

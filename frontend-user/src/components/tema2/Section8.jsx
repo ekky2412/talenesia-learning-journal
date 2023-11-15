@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section7 = (props) => {
+const Section8 = (props) => {
   const [data, setData] = useState({
     tipeSoal: 'isian',
     jawaban: ''
@@ -19,8 +19,7 @@ const Section7 = (props) => {
   return (
     <QuestionTextArea
       question="
-      Coba ingat-ingat lagi masa sekolah dulu. Biasanya, hal apa
-      saja yang membuatmu semangat untuk belajar?
+      Hal apa saja yang biasanya membuat kamu malas belajar?
       "
       value={data.jawaban}
       onValueChange={handleValue}
@@ -28,4 +27,4 @@ const Section7 = (props) => {
   );
 };
 
-export default Section7;
+export default Section8;

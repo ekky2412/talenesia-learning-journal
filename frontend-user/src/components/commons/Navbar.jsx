@@ -1,8 +1,11 @@
 import React from 'react'
 import { Spacer, Menu, MenuButton, MenuList, MenuItem, Flex, Image } from '@chakra-ui/react'
 import logoTalenesia from '../../assets/images/logo_talenesia.png'
+import { useParams } from 'react-router-dom'
 
 const Navbar = () => {
+    const username = useParams().username
+
     return (
         <Flex minWidth='max-content' alignItems='center' gap='2'>
             <Image src={logoTalenesia} w='150px'></Image>
@@ -16,7 +19,7 @@ const Navbar = () => {
                             src='https://bit.ly/dan-abramov'
                             alt='Dan Abramov'
                         />
-                        Nama Peserta
+                        {username}
                     </Flex>
                 </MenuButton>
                 <MenuList>

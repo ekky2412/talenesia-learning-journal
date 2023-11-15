@@ -12,8 +12,8 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/journal/:themeid" element={<HeadersTema />} />
-        <Route exact path="/journal/:themeid/section/:sectionid" element={<TemaRouter />} />
+        <Route exact path="/journal/:username/:themeid" element={<HeadersTema />} />
+        <Route exact path="/journal/:username/:themeid/:sectionid" element={<TemaRouter />} />
       </Routes>
     </BrowserRouter>
   );

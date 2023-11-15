@@ -5,21 +5,49 @@ import {
     Grid,
     GridItem,
     Container,
+    useToast
 } from "@chakra-ui/react";
-import { Section1, Section2, Section3, Section4, Section5, Section6, Section7 } from "../components/tema3";
+import { Section1, Section2, Section3, Section4, Section5 } from "../components/tema3";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Navbar from "../components/commons/Navbar";
+import { axiosInstance } from "../services/axiosInstance";
 
 
 const Template = (props) => {
+    const [buttonClick, setButtonClick] = useState(true)
+    const [hiddenButton, setHiddenButton] = useState(false)
+    const toast = useToast()
 
-    const prevClick = () => {
-        props.navigate(`/journal/${props.themeid}/section/${props.section - 1}`)
+    const submitButton = () => {
+        axiosInstance.post(`journal/${props.username}/${props.themeid}/${props.section}`,
+            (props.sectionData)
+        ).then((response) => {
+            toast({
+                title: response.data.message,
+                status: 'success',
+                duration: 5000,
+                position: 'top-right',
+                isClosable: true,
+            })
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+        });
+        setButtonClick(false)
     }
     const nextClick = () => {
-        props.navigate(`/journal/${props.themeid}/section/${props.section + 1}`)
+        props.navigate(`/journal/${props.username}/${props.themeid}/${props.section + 1}`)
+        setButtonClick(true)
+        setHiddenButton(false)
     }
+
+    useEffect(() => {
+        if (props.section === 1) {
+            setButtonClick(false)
+            setHiddenButton(true)
+        }
+    }, [props.section])
 
 
     return (
@@ -46,11 +74,13 @@ const Template = (props) => {
                     </GridItem >
 
                     <Flex justifyContent='space-between' p='4'>
-                        {props.section > 1 ? <Button onClick={prevClick}>Previous</Button> : <div></div>}
-                        {props.section < 11 ? <Button onClick={nextClick}>Next</Button> : <div></div>}
-
+                        <Button colorScheme="teal" hidden={hiddenButton} onClick={submitButton} isDisabled={!buttonClick}>Submit</Button>
+                        {props.section < 5 ?
+                            <Button colorScheme='teal' isDisabled={buttonClick} onClick={nextClick}>Next</Button>
+                            :
+                            <Link to='/dashboard'><Button colorScheme="teal">Close</Button></Link>
+                        }
                     </Flex>
-
                 </Box>
             </Container>
 
@@ -64,6 +94,12 @@ const Template = (props) => {
 const Tema3 = (props) => {
     const [section, setSection] = useState(0)
     const navigate = useNavigate()
+    const [sectionData, setSectionData] = useState({})
+
+    const handleSectionData = (data) => {
+        setSectionData(data)
+    };
+
     useEffect(() => {
         setSection(props.sectionid)
     }, [props.sectionid])
@@ -71,68 +107,32 @@ const Tema3 = (props) => {
     switch (section) {
         case 1:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section1 />
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
+                    <Section1 onSectionDataChange={handleSectionData} />
                 </Template>
             )
         case 2:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section2 />
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
+                    <Section2 onSectionDataChange={handleSectionData} />
                 </Template>
             )
         case 3:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section3 />
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
+                    <Section3 onSectionDataChange={handleSectionData} />
                 </Template>
             )
         case 4:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section4 />
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
+                    <Section4 onSectionDataChange={handleSectionData} />
                 </Template>
             )
         case 5:
             return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section5 />
-                </Template>
-            )
-        case 6:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section6 />
-                </Template>
-            )
-        case 7:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section7 />
-                </Template>
-            )
-        case 8:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section8 />
-                </Template>
-            )
-        case 9:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section9 />
-                </Template>
-            )
-        case 10:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section10 />
-                </Template>
-            )
-        case 11:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid}>
-                    <Section11 />
+                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
+                    <Section5 onSectionDataChange={handleSectionData} />
                 </Template>
             )
 

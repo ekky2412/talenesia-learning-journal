@@ -19,9 +19,8 @@ const Section7 = (props) => {
   return (
     <QuestionTextArea
       question="
-      Coba ingat-ingat lagi masa sekolah dulu. Biasanya, hal apa
-      saja yang membuatmu semangat untuk belajar?
-      "
+        Apa yang ingin kamu tanyakan ke kakak mentor terkait hasil
+        tes ini?"
       value={data.jawaban}
       onValueChange={handleValue}
     />
