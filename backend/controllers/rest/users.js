@@ -145,7 +145,6 @@ export const addLoginAuth = async (req, res) => {
       message: "User not found!",
     });
   }
-  console.log(user);
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (isPasswordValid) {
@@ -164,4 +163,10 @@ export const addLoginAuth = async (req, res) => {
       message: "Wrong Password!",
     });
   }
+};
+
+export const notFound = async (req, res) => {
+  return res.status(404).json({
+    message: "Request not found!",
+  });
 };

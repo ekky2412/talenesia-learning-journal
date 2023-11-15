@@ -7,6 +7,7 @@ import {
   editUser,
   deleteUser,
   addLoginAuth,
+  notFound,
 } from "../controllers/rest/users.js";
 import {
   getUserJournal,
@@ -32,5 +33,8 @@ router.post("/journal/tugas/:username/:theme", addUserJournalPantauTheme);
 router.get("/journal/:username/:theme", getUserJournalTheme);
 router.get("/journal/:username/:theme/:section", getUserJournalThemeSection);
 router.post("/journal/:username/:theme/:section", addUserJournalThemeSection);
+
+router.get("*", notFound);
+router.post("*", notFound);
 
 export default router;
