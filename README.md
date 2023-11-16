@@ -345,3 +345,70 @@ POST    /api/login/auth
     ```
     { "error": "User doesn't exist" }
     ```
+
+### User
+
+**User Object**
+
+```
+{
+    "username"  : String,
+    "email"     : String,
+    "user_type" : String (User),
+    "birthday"  : date,
+    "education" : String,
+    "city"      : String,
+    "phoneNo"   : String
+}
+```
+
+**Journal Object**
+
+```
+{
+    "noSoal"    : Number,
+    "noTema"    : Number,
+    "username"  : String,
+    "jawaban"   : date,
+    "tipeSoal"  : String
+}
+```
+
+**Tugas Object**
+
+```
+{
+    "noTema"    : Number,
+    "noTugas"   : Number,
+    "username"  : String,
+    "masukan"   : date,
+    "sedangDikerjakan"  : Boolean,
+    "sudahDikerjakan"   : Boolean
+}
+```
+
+- #### GET /api/journal/:username
+
+  **returns Journal based on the specified username**
+
+  - URL Params
+
+    None
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        {<user_object>},
+        {<user_object>},
+        ...
+    ]
+    ```
