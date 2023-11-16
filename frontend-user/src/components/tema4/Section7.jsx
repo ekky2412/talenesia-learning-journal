@@ -1,34 +1,29 @@
 import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
-import { Stack } from "@chakra-ui/react";
 
-const Section7 = () => {
-  const [value7, setValue7] = useState("");
+const Section7 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
-  const handleValue7 = (e) => {
-    setValue7(e.target.value);
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
   };
 
   return (
-    <Stack gap={10}>
-      <QuestionTextArea
-        question="
-      Apa pendapat yang sudah kamu sampaikan ke dalam kelas / sesi kelompok?
+    <QuestionTextArea
+      question="
+      Apa yang bisa dilakukan untuk mengatasi hambatan tersebut?
       "
-
-        value={value7}
-        onValueChange={handleValue7}
-      />
-
-      <QuestionTextArea
-        question="
-      Bagaimana respon orang lain atas pendapatmu?
-      "
-
-        value={value7}
-        onValueChange={handleValue7}
-      />
-    </Stack>
+      value={data.jawaban}
+      onValueChange={handleValue}
+    />
   );
 };
 

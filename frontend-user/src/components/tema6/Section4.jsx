@@ -1,28 +1,29 @@
-import React from "react";
-import { Stack, Text, CheckboxGroup, Checkbox } from "@chakra-ui/react";
+import React, { useState } from "react";
+import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section4 = () => {
+const Section4 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
+  };
 
   return (
-    <Stack minH={'70vh'} spacing='24px' direction={{ base: 'column', md: 'column' }} justify={'center'}>
-      <Text
-        fontSize='25px'
-        maxW='70vw'
-        whiteSpace='wrap'
-      >
-        Berikan tanda pada kotak yang paling sesuai dengan
-        keadaan kamu.
-      </Text>
-      <CheckboxGroup colorScheme='teal' defaultValue={['naruto', 'kakashi']}>
-        <Stack spacing={[1, 5]} direction={'column'}>
-          <Checkbox size={'lg'} value='one'>Saya mampu untuk menyelesaikan setiap permasalahan pada studi kasus</Checkbox>
-          <Checkbox size={'lg'} value='two'>Saya selalu memperhatikan sumber informasi yang saya dapatkan</Checkbox>
-          <Checkbox size={'lg'} value='tree'>Jika ada materi yang membuat saya penasaran, maka saya akan mencoba mencari tahu lebih detail</Checkbox>
-          <Checkbox size={'lg'} value='four'>Jika ada penyampaian pembicara yang berbeda dengan pendapat saya, saya berani menyampaikannya</Checkbox>
-        </Stack>
-      </CheckboxGroup>
-    </Stack>
+    <QuestionTextArea
+      question="Dari kelas tema mengurus sarana dan prasarana kantor,
+      apa saja materi yang ingin kamu pelajari lebih lanjut?"
+      value={data.jawaban}
+      onValueChange={handleValue}
+    />
+
   );
 };
 

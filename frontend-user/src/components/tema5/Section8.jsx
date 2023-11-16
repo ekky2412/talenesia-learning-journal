@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import QuestionTextArea from "../commons/QuestionTextArea";
+import QuestionBorderDash from "../commons/QuestionBorderDash";
 
-const Section8 = () => {
-  const [value8, setValue8] = useState("");
+const Section8 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
-  const handleValue8 = (e) => {
-    setValue8(e.target.value);
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
   };
 
   return (
-    <QuestionTextArea
-      question='Apa saja
-kebiasaan-kebiasaan baik
-yang sudah kamu terapkan
-secara disiplin selama satu
-bulan terakhir?'
-      value={value8}
-      onValueChange={handleValue8}
+    <QuestionBorderDash
+      question="Diantara teman di kelompokmu, siapa yang bisa membantumu?"
+      value={data.jawaban}
+      onValueChange={handleValue}
     />
   );
 };

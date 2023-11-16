@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section3 = () => {
-  const [value3, setValue3] = useState("");
+const Section3 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
-  const handleValue3 = (e) => {
-    setValue3(e.target.value);
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
   };
 
   return (
     <QuestionTextArea
-      question="
-      Materi apa yang paling kamu sukai?
-      "
-      value={value3}
-      onValueChange={handleValue3}
+      question="Mengapa kamu memilih gambar itu?"
+      value={data.jawaban}
+      onValueChange={handleValue}
     />
+
   );
 };
 

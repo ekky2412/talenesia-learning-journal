@@ -1,89 +1,66 @@
+import React, { useState } from "react";
 import {
     Flex,
     Stack,
     Text,
     Image,
-    Checkbox
+    Checkbox,
+    CheckboxGroup
 } from "@chakra-ui/react";
 import heart from '../../assets/images/heart.png';
 import happy from '../../assets/images/happy.png';
 import like from '../../assets/images/like.png';
 import sick from '../../assets/images/sick.png';
 import sad from '../../assets/images/sad.png';
-import QuestionTextArea from "../commons/QuestionTextArea";
-import { useState } from "react";
 
+const icons = [
+    { src: heart, value: "icon 1" },
+    { src: happy, value: "icon 2" },
+    { src: like, value: "icon 3" },
+    { src: sick, value: "icon 4" },
+    { src: sad, value: "icon 5" }
+];
 
-const Section2 = () => {
-    const [value42, setValue42] = useState("");
+const Section2 = (props) => {
+    const [data, setData] = useState({
+        tipeSoal: 'reaksi',
+        jawaban: ''
+    });
 
-    const handleValue42 = (e) => {
-        setValue42(e.target.value);
+    const handleCheckboxChange = (value) => {
+        setData(prevData => ({
+            ...prevData,
+            jawaban: value
+        }));
+        props.onSectionDataChange({ ...data, jawaban: value });
     };
+
     return (
-        <Stack minH={'70vh'} spacing='24px' direction={{ base: 'column', md: 'column' }} justify={'center'}>
+        <Stack minH={'70vh'} spacing='24px' direction={{ base: 'column', md: 'column' }} justify={'center'} gap={10}>
             <Text
                 fontSize='25px'
                 maxW='70vw'
                 whiteSpace='wrap'
             >
-                Bagaimana perasaanmu saat mengikuti kelas Mengurus
-                Sarana Prasana Kantor?
+                Bagaimana perasaanmu saat mengikuti kelas Mengerjakan tugas-tugas administratif?
             </Text>
-            <Flex justifyContent={'space-evenly'} alignItems={'center'}>
-                <Flex direction={"column"} alignItems={'center'} gap={5}>
-                    <Image
-                        borderRadius='full'
-                        boxSize='100px'
-                        src={heart}
-                        alt='heart'
-                    />
-                    <Checkbox colorScheme="teal" size='lg'></Checkbox>
+            <CheckboxGroup value={data.jawaban}>
+                <Flex justifyContent={'space-evenly'} alignItems={'center'}>
+                    {icons.map((icon) => (
+                        <Flex key={icon.value} direction="column" alignItems="center" gap={5}>
+                            <Image borderRadius="full" boxSize="100px" src={icon.src} alt={`icon${icon.value}`} />
+                            <Checkbox
+                                colorScheme="teal"
+                                size="lg"
+                                value={icon.value}
+                                onChange={(e) => handleCheckboxChange(e.target.value)}
+                            ></Checkbox>
+                        </Flex>
+                    ))}
                 </Flex>
-                <Flex direction={"column"} alignItems={'center'} gap={5}>
-                    <Image
-                        borderRadius='full'
-                        boxSize='100px'
-                        src={happy}
-                        alt='happy'
-                    />
-                    <Checkbox colorScheme="teal" size='lg'></Checkbox>
-                </Flex>
-                <Flex direction={"column"} alignItems={'center'} gap={5}>
-                    <Image
-                        borderRadius='full'
-                        boxSize='100px'
-                        src={like}
-                        alt='like'
-                    />
-                    <Checkbox colorScheme="teal" size='lg'></Checkbox>
-                </Flex>
-                <Flex direction={"column"} alignItems={'center'} gap={5}>
-                    <Image
-                        borderRadius='full'
-                        boxSize='100px'
-                        src={sick}
-                        alt='sick'
-                    />
-                    <Checkbox colorScheme="teal" size='lg'></Checkbox>
-                </Flex>
-                <Flex direction={"column"} alignItems={'center'} gap={5}>
-                    <Image
-                        borderRadius='full'
-                        boxSize='100px'
-                        src={sad}
-                        alt='sad'
-                    />
-                    <Checkbox size='lg'></Checkbox>
-                </Flex>
-            </Flex>
-            <QuestionTextArea
-                question="Mengapa kamu memilih gambar itu?"
-                value={value42}
-                onValueChange={handleValue42}
-            />
+            </CheckboxGroup>
         </Stack>
-    )
+    );
 }
 
-export default Section2
+export default Section2;

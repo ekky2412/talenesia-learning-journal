@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section7 = () => {
-  const [value7, setValue7] = useState("");
+const Section7 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
-  const handleValue7 = (e) => {
-    setValue7(e.target.value);
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
   };
 
   return (
     <QuestionTextArea
       question="
-      Apa yang terjadi setelah itu sehingga kamu bisa bangkit lagi?
+      Saat gagal, apa yang kamu rasakan atau pikirkan?
       "
-
-      value={value7}
-      onValueChange={handleValue7}
+      value={data.jawaban}
+      onValueChange={handleValue}
     />
   );
 };

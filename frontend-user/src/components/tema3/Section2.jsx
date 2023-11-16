@@ -36,7 +36,7 @@ const Section2 = (props) => {
     };
 
     return (
-        <Stack minH={'70vh'} spacing='24px' direction={{ base: 'column', md: 'column' }} justify={'center'}>
+        <Stack minH={'70vh'} spacing='24px' direction={{ base: 'column', md: 'column' }} justify={'center'} gap={10}>
             <Text
                 fontSize='25px'
                 maxW='70vw'

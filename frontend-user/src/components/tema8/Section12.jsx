@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import QuestionBorderDash from "../commons/QuestionBorderDash";
+import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section9 = (props) => {
+const Section12 = (props) => {
   const [data, setData] = useState({
     tipeSoal: 'isian',
     jawaban: ''
@@ -17,12 +17,12 @@ const Section9 = (props) => {
   };
 
   return (
-    <QuestionBorderDash
-      question="Diantara teman di kelompokmu, siapa yang perlu kamu bantu?"
+    <QuestionTextArea
+      question="Apa yang masih ingin kamu perbaiki dari cara kamu berpendapat?"
       value={data.jawaban}
       onValueChange={handleValue}
     />
   );
 };
 
-export default Section9;
+export default Section12;

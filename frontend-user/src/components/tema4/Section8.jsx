@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import QuestionTextArea from "../commons/QuestionTextArea";
+import { Stack } from "@chakra-ui/react";
 
-const Section8 = () => {
-  const [value8, setValue8] = useState("");
+const Section8 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
 
-  const handleValue8 = (e) => {
-    setValue8(e.target.value);
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
   };
 
   return (
     <QuestionTextArea
-      question="
-      Apa yang kamu sukai dari caramu menyampaikan pendapat?
-      "
-
-      value={value8}
-      onValueChange={handleValue8}
+      question="Apa pendapat yang sudah kamu sampaikan ke dalam kelas / sesi kelompok?"
+      value={data.jawaban}
+      onValueChange={handleValue}
     />
   );
 };

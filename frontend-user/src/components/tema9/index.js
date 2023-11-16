@@ -6,3 +6,4 @@ export { default as Section5 } from './Section5';
 export { default as Section6 } from './Section6';
 export { default as Section7 } from './Section7';
 export { default as Section8 } from './Section8';
+export { default as Section9 } from './Section9';

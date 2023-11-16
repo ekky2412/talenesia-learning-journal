@@ -8,5 +8,4 @@ export { default as Section7 } from './Section7';
 export { default as Section8 } from './Section8';
 export { default as Section9 } from './Section9';
 export { default as Section10 } from './Section10';
-export { default as Section11 } from './Section11';
 

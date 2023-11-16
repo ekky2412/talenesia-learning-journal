@@ -1,32 +1,29 @@
-import React from "react";
-import { Text, Stack } from "@chakra-ui/react";
+import React, { useState } from "react";
+import QuestionTextArea from "../commons/QuestionTextArea";
 
-const Section10 = () => {
+const Section10 = (props) => {
+  const [data, setData] = useState({
+    tipeSoal: 'isian',
+    jawaban: ''
+  });
+
+  const handleValue = (e) => {
+    const newValue = e.target.value;
+    setData(prevData => ({
+      ...prevData,
+      jawaban: newValue
+    }));
+    props.onSectionDataChange({ ...data, jawaban: newValue });
+  };
 
   return (
-    <Stack minH={'70vh'} direction={{ base: 'column', md: 'column' }} justify={'center'} gap={8}>
-      <Text
-        fontSize='25px'
-        maxW='70vw'
-        whiteSpace='wrap'
-        textAlign={'justify'}
-      >
-        Wah, tidak terasa sudah sebulan kamu mencatat di kalender
-        kebiasaan-kebiasaan baru yang kamu terapkan. Di bulan
-        kedua, tantangan belajar tentu saja lebih susah. Mungkin kamu
-        menemukan kebiasan lain yang menghambat kamu untuk
-        melangkah lebih jauh dalam belajar dan mengembangkan
-        karir.
-      </Text>
-      <Text
-        fontSize='25px'
-        maxW='70vw'
-        whiteSpace='wrap'
-        textAlign={'justify'}
-      >
-        Tuliskan kebiasaan-kebiasaanmu yang ingin kamu ubah!
-      </Text>
-    </Stack>
+    <QuestionTextArea
+      question="
+      Apa yang kamu sukai dari caramu menyampaikan pendapat?
+      "
+      value={data.jawaban}
+      onValueChange={handleValue}
+    />
   );
 };
 

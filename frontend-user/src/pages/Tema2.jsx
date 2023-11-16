@@ -14,20 +14,43 @@ const Template = (props) => {
     const toast = useToast()
 
     const submitButton = () => {
-        axiosInstance.post(`journal/${props.username}/${props.themeid}/${props.section}`,
-            (props.sectionData)
-        ).then((response) => {
-            toast({
-                title: response.data.message,
-                status: 'success',
-                duration: 5000,
-                position: 'top-right',
-                isClosable: true,
-            })
-            console.log(response)
-        }).catch((error) => {
-            console.log(error)
-        });
+        if (props.section === 1) {
+            const data = props.sectionData
+            const newData = data.map(({ noTugas, sedangDikerjakan, sudahDikumpulkan, masukan }) => ({
+                noTugas,
+                sedangDikerjakan,
+                sudahDikumpulkan,
+                masukan,
+            }));
+            axiosInstance.post(`journal/tugas/${props.username}/${props.themeid}`,
+                newData
+            ).then((response) => {
+                toast({
+                    title: response.data.message,
+                    status: 'success',
+                    duration: 5000,
+                    position: 'top-right',
+                    isClosable: true,
+                })
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            });
+        } else {
+            axiosInstance.post(`journal/${props.username}/${props.themeid}/${props.section}`,
+                (props.sectionData)
+            ).then((response) => {
+                toast({
+                    title: response.data.message,
+                    status: 'success',
+                    duration: 5000,
+                    position: 'top-right',
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                console.log(error)
+            });
+        }
         setButtonClick(false)
     }
     const nextClick = () => {
@@ -35,13 +58,6 @@ const Template = (props) => {
         setButtonClick(true)
         setHiddenButton(false)
     }
-
-    useEffect(() => {
-        if (props.section === 1) {
-            setButtonClick(false)
-            setHiddenButton(true)
-        }
-    }, [props.section])
 
 
     return (
@@ -72,7 +88,7 @@ const Template = (props) => {
                         {props.section < 9 ?
                             <Button colorScheme='teal' isDisabled={buttonClick} onClick={nextClick}>Next</Button>
                             :
-                            <Link to='/dashboard'><Button colorScheme="teal">Close</Button></Link>
+                            <Link to='/dashboard'><Button colorScheme="teal" isDisabled={buttonClick}>Close</Button></Link>
                         }
                     </Flex>
 

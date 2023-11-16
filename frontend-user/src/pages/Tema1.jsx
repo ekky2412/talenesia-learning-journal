@@ -1,7 +1,7 @@
 import { Grid, GridItem, Container, Box, Flex, Button, useToast } from "@chakra-ui/react";
 import {
     Section1, Section2, Section3, Section4, Section5, Section6,
-    Section7, Section8, Section9, Section10, Section11
+    Section7, Section8, Section9, Section10
 } from "../components/tema1";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
@@ -69,7 +69,7 @@ const Template = (props) => {
 
                     <Flex justifyContent='space-between' p='4'>
                         <Button colorScheme="teal" hidden={hiddenButton} onClick={submitButton} isDisabled={!buttonClick}>Submit</Button>
-                        {props.section < 11 ?
+                        {props.section < 10 ?
                             <Button colorScheme='teal' isDisabled={buttonClick} onClick={nextClick}>Next</Button>
                             :
                             <Link to='/dashboard'><Button colorScheme="teal" isDisabled={buttonClick}>Close</Button></Link>}
@@ -155,12 +155,6 @@ const Tema1 = (props) => {
             return (
                 <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
                     <Section10 onSectionDataChange={handleSectionData} />
-                </Template>
-            )
-        case 11:
-            return (
-                <Template section={section} setSection={setSection} navigate={navigate} themeid={props.themeid} username={props.username} sectionData={sectionData}>
-                    <Section11 onSectionDataChange={handleSectionData} />
                 </Template>
             )
 
