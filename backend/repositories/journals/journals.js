@@ -1,6 +1,15 @@
 import Journal from "./models/journal-model.js";
 import Tugas from "./models/tugas-model.js";
 
+export const getJournalTheme = async (noTema) => {
+  try {
+    const journal = await Journal.find({ noTema: noTema });
+    return journal;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getUserJournalRepo = async (username) => {
   try {
     const journals = await Journal.find({ username: username });
@@ -79,6 +88,15 @@ export const addTugasByRepo = async (
       { upsert: true, new: true }
     );
     return tugasToSave;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getSectionOneDistinctRepo = async (noTema) => {
+  try {
+    const section = await Tugas.find({ noTema }).distinct("username");
+    return section;
   } catch (err) {
     return err;
   }

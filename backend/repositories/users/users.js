@@ -108,3 +108,12 @@ export const deleteUserByRepo = async (id) => {
     return err;
   }
 };
+
+export const getUsernameDistinctRepo = async () => {
+  try {
+    const username = DataUser.find({ userType: "user" }).distinct("username");
+    return username;
+  } catch (err) {
+    return err;
+  }
+};

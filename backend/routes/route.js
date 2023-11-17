@@ -8,6 +8,9 @@ import {
   deleteUser,
   addLoginAuth,
   notFound,
+  getThemeProgress,
+  getPesertaProgress,
+  getPesertaThemeProgress,
 } from "../controllers/rest/users.js";
 import {
   getUserJournal,
@@ -24,6 +27,10 @@ router.get("/users/:username", getDetailUser);
 router.post("/users", addUser);
 router.post("/users/update/:id", editUser);
 router.post("/users/delete/:id", deleteUser);
+
+router.get("/progress/tema", getThemeProgress); // progress tiap tema untuk semua peserta
+router.get("/progress/peserta/:username", getPesertaProgress); // progress seluruh tema untuk satu peserta
+router.get("/progress/peserta/:username/:theme", getPesertaThemeProgress); // progress tiap tema untuk satu peserta
 
 // User
 router.post("/login/auth", addLoginAuth);
