@@ -139,7 +139,7 @@ In this project, we use MongoDB database to store our data with 3 main collectio
 
 ### `journals` collection
 
-```json
+```
 {
   "noSoal"      : Number,
   "noTema"      : Number,
@@ -181,11 +181,11 @@ POST    /api/login/auth
 
 **User Object**
 
-```json
+```
 {
-    "username": String,
-    "email":String,
-    "user_type": String
+    "username"  : String,
+    "email"     : String,
+    "user_type" : String
 }
 
 ```
@@ -198,7 +198,7 @@ POST    /api/login/auth
 
     None
 
-  - Body Params
+  - Data Params
 
     None
 
@@ -208,40 +208,35 @@ POST    /api/login/auth
 
   - Code 200 response :
 
-    ```json
-    {
+    ```
+    [
         {<user_object>},
         {<user_object>},
         ...
-    }
+    ]
     ```
 
-- POST /api/users
+- ### POST /api/users
 
-  **Add new user**
+  **Create new user and return the new object**
 
   - URL Params
 
-    > username = [String] **REQUIRED**, \
-    > password = [string] **REQUIRED**, \
-    > email = [string] **REQUIRED**, \
-    > userType = [string] (user / admin) **REQUIRED**,\
-    > birthday = date **OPTIONAL**, \
-    > education = [string] **OPTIONAL**, \
-    > city = [string] **OPTIONAL**, \
-    > phoneNo = [string] **OPTIONAL**
+    None
 
-  - Body Params
+  - Data Params
 
-    ```json
-    username : string,
-    password : string,
-    email : string,
-    userType : string,
-    birthday : date,
-    education : string,
-    city : string,
-    phoneNo : string
+    ```
+    {
+      username : string,
+      password : string,
+      email : string,
+      userType : string,
+      birthday : date,
+      education : string,
+      city : string,
+      phoneNo : string
+    }
     ```
 
   - Headers
@@ -250,10 +245,170 @@ POST    /api/login/auth
 
   - Code 200 response :
 
-    ```json
+    ```
+    [
+        {<user_object>}
+    ]
+    ```
+
+- ### GET /api/users/:username
+
+  **Return the specific user**
+
+  - URL Params
+
+    None
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
     {
+        <user_object>
+    }
+    ```
+
+  - Code 404 Response :
+
+    ```
+    { error : "User doesn't exist" }
+    ```
+
+- ### POST /api/users/update/:id
+
+  **Update the specific user**
+
+  - URL Params
+
+    None
+
+  - Data Params
+
+    ```
+    {
+      username : string,
+      password : string,
+      email : string,
+      userType : string,
+      birthday : date,
+      education : string,
+      city : string,
+      phoneNo : string
+    }
+    ```
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        {<user_object>}
+    ]
+    ```
+
+- ### POST /api/users/delete/:id
+
+  **Delete the specified user**
+
+  - URL Params
+
+    Required:
+
+    - '\_id' [String]
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+    Authorization: Bearer `<OAuth Token>`
+
+  - Code 204 response :
+
+    No content
+
+  - Code 404 response :
+
+    ```
+    { "error": "User doesn't exist" }
+    ```
+
+### User
+
+**User Object**
+
+```
+{
+    "username"  : String,
+    "email"     : String,
+    "user_type" : String (User),
+    "birthday"  : date,
+    "education" : String,
+    "city"      : String,
+    "phoneNo"   : String
+}
+```
+
+**Journal Object**
+
+```
+{
+    "noSoal"    : Number,
+    "noTema"    : Number,
+    "username"  : String,
+    "jawaban"   : date,
+    "tipeSoal"  : String
+}
+```
+
+**Tugas Object**
+
+```
+{
+    "noTema"    : Number,
+    "noTugas"   : Number,
+    "username"  : String,
+    "masukan"   : date,
+    "sedangDikerjakan"  : Boolean,
+    "sudahDikerjakan"   : Boolean
+}
+```
+
+- #### GET /api/journal/:username
+
+  **returns Journal based on the specified username**
+
+  - URL Params
+
+    None
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
         {<user_object>},
         {<user_object>},
         ...
-    }
+    ]
     ```
