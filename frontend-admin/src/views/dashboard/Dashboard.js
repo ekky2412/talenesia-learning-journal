@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
-  CAvatar,
   CCard,
   CCardBody,
   CCardGroup,
@@ -18,35 +17,32 @@ import {
   CWidgetStatsC,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import {
-  cibCcAmex,
-  cibCcApplePay,
-  cibCcMastercard,
-  cibCcPaypal,
-  cibCcStripe,
-  cibCcVisa,
-  cifBr,
-  cifEs,
-  cifFr,
-  cifIn,
-  cifPl,
-  cifUs,
-  cilPeople,
-  cilUser,
-  cilUserFemale,
-  cilSpeedometer,
-} from '@coreui/icons'
+import { cilPeople, cilUser, cilUserFemale, cilSpeedometer } from '@coreui/icons'
 
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
 import { Link } from 'react-router-dom'
+import { apiUrl } from 'src/config'
+import { calculateStatistics, getRandomColor } from 'src/utils/helper'
 
 const Dashboard = () => {
   // const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/users`)
+      const data = await response.json()
+      setUsers(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const { totalParticipants, maleParticipants, femaleParticipants, averageProgress } =
+    calculateStatistics(users)
 
   const progressGroupExample1 = [
     { title: 'Tema1', value1: 34 },
@@ -59,123 +55,32 @@ const Dashboard = () => {
     { title: 'Tema8', value1: 9 },
   ]
 
-  const tableExample = [
-    {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Yiorgos Avraamu',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      country: { name: 'USA', flag: cifUs },
-      usage: {
-        value: 50,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Mastercard', icon: cibCcMastercard },
-      activity: '10 sec ago',
-    },
-    {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Avram Tarasios',
-        new: false,
-        registered: 'Jan 1, 2021',
-      },
-      country: { name: 'Brazil', flag: cifBr },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Visa', icon: cibCcVisa },
-      activity: '5 minutes ago',
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2021' },
-      country: { name: 'India', flag: cifIn },
-      usage: {
-        value: 74,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Stripe', icon: cibCcStripe },
-      activity: '1 hour ago',
-    },
-    {
-      avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2021' },
-      country: { name: 'France', flag: cifFr },
-      usage: {
-        value: 98,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'PayPal', icon: cibCcPaypal },
-      activity: 'Last month',
-    },
-    {
-      avatar: { src: avatar5, status: 'success' },
-      user: {
-        name: 'Agapetus Tadeáš',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      country: { name: 'Spain', flag: cifEs },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Google Wallet', icon: cibCcApplePay },
-      activity: 'Last week',
-    },
-    {
-      avatar: { src: avatar6, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      country: { name: 'Poland', flag: cifPl },
-      usage: {
-        value: 43,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Amex', icon: cibCcAmex },
-      activity: 'Last week',
-    },
-  ]
-
   return (
     <>
       <CCardGroup className="mb-4">
         <CWidgetStatsC
           icon={<CIcon icon={cilPeople} height={36} />}
-          value="87.500"
+          value={totalParticipants}
           title="Total Peserta"
           progress={{ color: 'primary', value: 100 }}
         />
         <CWidgetStatsC
           icon={<CIcon icon={cilUser} height={36} />}
-          value="385"
+          value={maleParticipants}
           title="Peserta Laki-laki"
-          progress={{ color: 'info', value: 75 }}
+          progress={{ color: 'info', value: (maleParticipants / totalParticipants) * 100 }}
         />
         <CWidgetStatsC
           icon={<CIcon icon={cilUserFemale} height={36} />}
-          value="1238"
+          value={femaleParticipants}
           title="Peserta Perempuan"
-          progress={{ color: 'danger', value: 75 }}
+          progress={{ color: 'danger', value: (femaleParticipants / totalParticipants) * 100 }}
         />
         <CWidgetStatsC
           icon={<CIcon icon={cilSpeedometer} height={36} />}
-          value="75%"
+          value={`${averageProgress}%`}
           title="Avg. Progress"
-          progress={{ color: 'success', value: 75 }}
+          progress={{ color: 'success', value: { averageProgress } }}
         />
       </CCardGroup>
       <CRow>
@@ -219,23 +124,34 @@ const Dashboard = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
+                  {users.map((user) => (
+                    <CTableRow v-for="item in tableItems" user={user} key={user.username}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} />
+                        <div className="d-flex align-items-center justify-content-center">
+                          <div
+                            className="rounded-circle text-white"
+                            style={{
+                              width: '2rem',
+                              height: '2rem',
+                              backgroundColor: getRandomColor(),
+                            }}
+                          >
+                            {user.username.charAt(0).toUpperCase()}
+                          </div>
+                        </div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <Link to={`../admin/peserta/${item.user.name}`}>{item.user.name}</Link>
+                        <Link to={`../admin/peserta/${user.username}`}>{user.username}</Link>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>
-                          <strong>{item.usage.value}%</strong>
+                          <strong>70%</strong>
                         </div>
-                        <CProgress thin color={item.usage.color} value={item.usage.value} />
+                        <CProgress thin color="info" value="70" />
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>
-                        <strong>{item.activity}</strong>
+                        <strong>{user.activity}</strong>
                       </CTableDataCell>
                     </CTableRow>
                   ))}

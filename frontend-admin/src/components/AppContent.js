@@ -23,7 +23,6 @@ const AppContent = () => {
               )
             )
           })}
-          <Route path="/peserta/:id" element={<Navigate to={'admin/peserta'} />} />
           <Route path="/" element={<Navigate to="admin/dashboard" replace />} />
         </Routes>
       </Suspense>

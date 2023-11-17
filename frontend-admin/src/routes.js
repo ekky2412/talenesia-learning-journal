@@ -61,7 +61,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/admin/peserta', name: 'Peserta', element: Peserta },
-  { path: '/admin/peserta/:id', name: 'DetailPeserta', element: DetailPeserta },
+  { path: '/admin/peserta/:username', name: 'DetailPeserta', element: DetailPeserta },
   { path: '/jurnal', name: 'Jurnal', element: Tema1, exact: true },
   { path: '/jurnal/tema1', name: 'Tema 1', element: Tema1 },
   { path: '/jurnal/tema2', name: 'Tema 2', element: Tema2 },

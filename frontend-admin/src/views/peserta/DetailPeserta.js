@@ -11,37 +11,101 @@ import {
   CProgress,
   CRow,
 } from '@coreui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import avatar from '../../assets/images/avatars/1.jpg'
+import { apiUrl } from 'src/config'
+import { calculateProgressByTheme } from 'src/utils/helper'
 
 const DetailPeserta = () => {
-  // Gunakan useParams dari react-router untuk mendapatkan id peserta dari URL
-  const { id } = useParams()
+  const { username } = useParams()
+  const [userDetail, setUserDetail] = useState({})
+  const [formData, setFormData] = useState({
+    username: userDetail.username,
+    password: '', // You should handle the password securely, possibly using another method
+    email: userDetail.email,
+    userType: 'user', // Assuming a default value for userType
+    birthday: userDetail.birthday,
+    gender: userDetail.gender,
+    education: userDetail.education,
+    city: userDetail.city,
+    phoneNo: userDetail.phoneNo,
+  })
+  const [progressData, setProgressData] = useState([])
+  const [themeProgress, setThemeProgress] = useState({})
 
-  const progressGroupExample1 = [
-    { title: 'Tema1', value1: 34 },
-    { title: 'Tema2', value1: 56 },
-    { title: 'Tema3', value1: 12 },
-    { title: 'Tema4', value1: 43 },
-    { title: 'Tema5', value1: 22 },
-    { title: 'Tema6', value1: 88 },
-    { title: 'Tema7', value1: 57 },
-    { title: 'Tema8', value1: 9 },
-  ]
-
-  // Buat objek peserta untuk menampilkan detail
-  const peserta = {
-    nama: `${id}`,
-    email: id,
-    avatar: { id },
-    detail: `Informasi lebih lanjut tentang Peserta ${id}`,
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    if (formData[name] !== value) {
+      setFormData({ ...formData, [name]: value })
+    }
   }
 
-  const phoneNumber = '1234567890'
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      // Assuming the user ID is available in userDetail.id
+      const response = await fetch(`${apiUrl}/api/users/update/${userDetail._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      console.log(formData)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const responseData = await response.json()
+
+      getUserDetail()
+      // Handle success, e.g., show a success message to the user
+      console.log('User updated successfully', responseData)
+    } catch (error) {
+      // Handle error, e.g., show an error message to the user
+      console.error('Error updating user', error.message)
+    }
+  }
+
+  const getUserDetail = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/users/${username}`)
+      const data = await response.json()
+      setUserDetail(data[0])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getProgressTheme = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/journal/${username}`)
+      const data = await response.json()
+      setProgressData(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUserDetail()
+    getProgressTheme()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username])
+
+  useEffect(() => {
+    // Check if progressData is an array before calculating theme progress
+    if (Array.isArray(progressData)) {
+      setThemeProgress(calculateProgressByTheme(progressData))
+    } else {
+      console.error('Invalid progressData format. Expected an array.')
+    }
+  }, [progressData])
 
   const handleWhatsAppClick = () => {
-    const whatsappLink = `https://wa.me/${phoneNumber}`
+    const whatsappLink = `https://wa.me/${userDetail.phoneNo}`
     window.open(whatsappLink, '_blank')
   }
 
@@ -50,7 +114,7 @@ const DetailPeserta = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Profil {peserta.nama}</strong>
+            <strong>Profil {userDetail.username}</strong>
           </CCardHeader>
           <CCardBody>
             <CRow className="mb-3">
@@ -61,15 +125,28 @@ const DetailPeserta = () => {
               </CCol>
             </CRow>
             <div className="clearfix mb-5">
-              <CImage align="center" rounded src={avatar} width={200} height={200} />
+              <CImage
+                align="center"
+                rounded
+                src={`https://ui-avatars.com/api/?name=${username}&length=1&background=43c4fb&size=200`}
+                width={200}
+                height={200}
+              />
             </div>
-            <CForm>
+            <CForm onSubmit={handleFormSubmit}>
               <CRow className="mb-3">
-                <CFormLabel htmlFor="inputEmail3" className="col-sm-2 offset-sm-1 col-form-label">
+                <CFormLabel htmlFor="inputEmail" className="col-sm-2 offset-sm-1 col-form-label">
                   <strong>Email</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="email" id="inputEmail3" disabled defaultValue={peserta.email} />
+                  <CFormInput
+                    type="email"
+                    id="inputEmail"
+                    name="email"
+                    disabled
+                    defaultValue={userDetail.email}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -77,7 +154,13 @@ const DetailPeserta = () => {
                   <strong>Username</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="text" id="inputUsername" />
+                  <CFormInput
+                    type="text"
+                    id="inputUsername"
+                    name="username"
+                    defaultValue={userDetail.username}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -85,7 +168,13 @@ const DetailPeserta = () => {
                   <strong>Birthday</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="date" id="inputBirthday" />
+                  <CFormInput
+                    type="date"
+                    id="inputBirthday"
+                    name="birthday"
+                    defaultValue={userDetail.birthday}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -93,7 +182,13 @@ const DetailPeserta = () => {
                   <strong>Gender</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="text" id="inputGender" />
+                  <CFormInput
+                    type="text"
+                    id="inputGender"
+                    name="gender"
+                    defaultValue={userDetail.gender}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -104,7 +199,13 @@ const DetailPeserta = () => {
                   <strong>Education</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="text" id="inputEducation" />
+                  <CFormInput
+                    type="text"
+                    id="inputEducation"
+                    name="education"
+                    defaultValue={userDetail.education}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -112,7 +213,13 @@ const DetailPeserta = () => {
                   <strong>City</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="text" id="inputCity" />
+                  <CFormInput
+                    type="text"
+                    id="inputCity"
+                    name="city"
+                    defaultValue={userDetail.city}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-5">
@@ -123,7 +230,13 @@ const DetailPeserta = () => {
                   <strong>Phone Number</strong>
                 </CFormLabel>
                 <CCol sm={6}>
-                  <CFormInput type="tel" id="inputPhoneNumber" />
+                  <CFormInput
+                    type="tel"
+                    id="inputPhoneNumber"
+                    name="phoneNo"
+                    defaultValue={userDetail.phoneNo}
+                    onChange={handleInputChange}
+                  />
                 </CCol>
               </CRow>
               <CRow className="mb-3">
@@ -139,21 +252,27 @@ const DetailPeserta = () => {
             <h1 className="text-center mb-5">Progress</h1>
             <CRow className="justify-content-center">
               <CCol xs={10} md={10} xl={10}>
-                {progressGroupExample1.map((item, index) => (
-                  <div className="progress-group mb-5" key={index}>
-                    <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis large">
-                        <Link to={`../jurnal/${item.title.toLowerCase()}`}>{item.title}</Link>
-                      </span>
-                    </div>
-                    <div className="progress-group-bars">
-                      <CProgress thin color="info" value={item.value1} />
-                      <div>
-                        <strong>{item.value1}%</strong>
+                {Object.keys(themeProgress).length === 0 ? (
+                  <div className="text-center">
+                    <h1>Belum ada jurnal yang dikerjakan.</h1>
+                  </div>
+                ) : (
+                  Object.keys(themeProgress).map((theme, index) => (
+                    <div className="progress-group mb-5" key={index}>
+                      <div className="progress-group-prepend">
+                        <span className="text-medium-emphasis large">
+                          <Link to={`../jurnal/${theme.toLowerCase()}`}>{theme}</Link>
+                        </span>
+                      </div>
+                      <div className="progress-group-bars">
+                        <CProgress thin color="info" value={themeProgress[theme].progress} />
+                        <div>
+                          <strong>{`${themeProgress[theme].progress}%`}</strong>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </CCol>
             </CRow>
           </CCardBody>
