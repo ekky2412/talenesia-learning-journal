@@ -1,6 +1,15 @@
 import Journal from "./models/journal-model.js";
 import Tugas from "./models/tugas-model.js";
 
+export const getJournalTheme = async (noTema) => {
+  try {
+    const journal = await Journal.find({ noTema: noTema });
+    return journal;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getUserJournalRepo = async (username) => {
   try {
     const journals = await Journal.find({ username: username });
@@ -44,15 +53,12 @@ export const addJournalByRepo = async (
   username
 ) => {
   try {
-    const journalToSave = new Journal({
-      noTema: theme,
-      noSoal: section,
-      tipeSoal,
-      jawaban,
-      username,
-    });
-    const saveJournal = await journalToSave.save();
-    return saveJournal;
+    const journalToSave = await Journal.findOneAndUpdate(
+      { username: username, noTema: theme, noSoal: section },
+      { tipeSoal, jawaban },
+      { upsert: true, new: true }
+    );
+    return journalToSave;
   } catch (err) {
     return err;
   }
@@ -77,11 +83,20 @@ export const addTugasByRepo = async (
 ) => {
   try {
     const tugasToSave = await Tugas.findOneAndUpdate(
-      { username: username, noTema: theme },
-      { tugas, sedangDikerjakan, sudahDikumpulkan, masukan },
+      { username: username, noTema: theme, noTugas: tugas },
+      { sedangDikerjakan, sudahDikumpulkan, masukan },
       { upsert: true, new: true }
     );
     return tugasToSave;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getSectionOneDistinctRepo = async (noTema) => {
+  try {
+    const section = await Tugas.find({ noTema }).distinct("username");
+    return section;
   } catch (err) {
     return err;
   }
