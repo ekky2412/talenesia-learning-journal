@@ -21,15 +21,13 @@ import { cilPeople, cilUser, cilUserFemale, cilSpeedometer } from '@coreui/icons
 
 import { Link } from 'react-router-dom'
 import { apiUrl } from 'src/config'
-import { calculateStatistics, getRandomColor } from 'src/utils/helper'
+import { averageProgressUser, calculateStatistics, getRandomColor } from 'src/utils/helper'
 
 const Dashboard = () => {
   // const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
   const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    getUsers()
-  }, [])
+  const [progress, setProgress] = useState([])
+  const [userProgress, setUserProgress] = useState({})
 
   const getUsers = async () => {
     try {
@@ -41,19 +39,45 @@ const Dashboard = () => {
     }
   }
 
-  const { totalParticipants, maleParticipants, femaleParticipants, averageProgress } =
-    calculateStatistics(users)
+  const getProgress = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/progress/tema`)
+      const data = await response.json()
+      setProgress(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  const progressGroupExample1 = [
-    { title: 'Tema1', value1: 34 },
-    { title: 'Tema2', value1: 56 },
-    { title: 'Tema3', value1: 12 },
-    { title: 'Tema4', value1: 43 },
-    { title: 'Tema5', value1: 22 },
-    { title: 'Tema6', value1: 88 },
-    { title: 'Tema7', value1: 57 },
-    { title: 'Tema8', value1: 9 },
-  ]
+  useEffect(() => {
+    getUsers()
+    getProgress()
+  }, [])
+
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        const progressData = {}
+        await Promise.all(
+          users.map(async (user) => {
+            const avgProgress = await averageProgressUser(user.username)
+            progressData[user.username] = Math.round(avgProgress)
+          }),
+        )
+        setUserProgress(progressData)
+      } catch (error) {
+        console.error('Error fetching user progress in component:', error)
+      }
+    }
+
+    fetchUserProgress()
+  }, [users]) // Efek dijalankan ketika nilai users berubah
+
+  const { totalParticipants, maleParticipants, femaleParticipants } = calculateStatistics(users)
+  const averageProgress = progress.length
+    ? progress.reduce((acc, theme) => acc + theme.percentage, 0) / progress.length
+    : 0
+  const filteredUsers = users.filter((user) => user.userType === 'user')
 
   return (
     <>
@@ -78,9 +102,9 @@ const Dashboard = () => {
         />
         <CWidgetStatsC
           icon={<CIcon icon={cilSpeedometer} height={36} />}
-          value={`${averageProgress}%`}
+          value={`${averageProgress.toFixed(2)}%`}
           title="Avg. Progress"
-          progress={{ color: 'success', value: { averageProgress } }}
+          progress={{ color: 'success', value: averageProgress.toFixed(2) }}
         />
       </CCardGroup>
       <CRow>
@@ -90,17 +114,17 @@ const Dashboard = () => {
             <CCardBody>
               <CRow className="justify-content-center">
                 <CCol xs={10} md={10} xl={10} className="pt-5">
-                  {progressGroupExample1.map((item, index) => (
+                  {progress.map((item, index) => (
                     <div className="progress-group mb-5" key={index}>
                       <div className="progress-group-prepend">
                         <span className="text-medium-emphasis large">
-                          <Link to={`../jurnal/${item.title.toLowerCase()}`}>{item.title}</Link>
+                          <Link to={`../jurnal/tema${item.theme}`}>Tema {item.theme}</Link>
                         </span>
                       </div>
                       <div className="progress-group-bars">
-                        <CProgress thin color="info" value={item.value1} />
+                        <CProgress thin color="info" value={item.percentage} />
                         <div>
-                          <strong>{item.value1}%</strong>
+                          <strong>{item.percentage}%</strong>
                         </div>
                       </div>
                     </div>
@@ -124,7 +148,7 @@ const Dashboard = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {users.map((user) => (
+                  {filteredUsers.map((user) => (
                     <CTableRow v-for="item in tableItems" user={user} key={user.username}>
                       <CTableDataCell className="text-center">
                         <div className="d-flex align-items-center justify-content-center">
@@ -145,9 +169,9 @@ const Dashboard = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>
-                          <strong>70%</strong>
+                          <strong>{userProgress[user.username]}%</strong>
                         </div>
-                        <CProgress thin color="info" value="70" />
+                        <CProgress thin color="info" value={userProgress[user.username]} />
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>

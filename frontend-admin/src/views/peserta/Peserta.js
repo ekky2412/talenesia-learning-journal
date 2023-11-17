@@ -30,14 +30,22 @@ import { cilPeople, cilPlus, cilTrash, cilUser, cilUserFemale } from '@coreui/ic
 
 import { Link } from 'react-router-dom'
 import { apiUrl } from '../../config'
-import { getRandomColor } from 'src/utils/helper'
+import { averageProgressUser, getRandomColor } from 'src/utils/helper'
 
 const Peserta = () => {
   const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    getUsers()
-  }, [])
+  const [userProgress, setUserProgress] = useState({})
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    gender: '',
+    city: '',
+  })
+  const [visibleAdd, setVisibleAdd] = useState(false)
+  const [visibleDelete, setVisibleDelete] = useState(false)
+  const [userToDelete, setUserToDelete] = useState(null)
+  const [validated, setValidated] = useState(false)
 
   const getUsers = async () => {
     try {
@@ -48,11 +56,6 @@ const Peserta = () => {
       console.log(error)
     }
   }
-
-  const [visibleAdd, setVisibleAdd] = useState(false)
-  const [visibleDelete, setVisibleDelete] = useState(false)
-  const [userToDelete, setUserToDelete] = useState(null)
-  const [validated, setValidated] = useState(false)
 
   const handleDeleteClick = (user) => {
     setUserToDelete(user)
@@ -76,14 +79,6 @@ const Peserta = () => {
       console.error('Error deleting user:', error)
     }
   }
-
-  const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    gender: '',
-    city: '',
-  })
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget
@@ -134,6 +129,31 @@ const Peserta = () => {
       [name]: value,
     }))
   }
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        const progressData = {}
+        await Promise.all(
+          users.map(async (user) => {
+            const avgProgress = await averageProgressUser(user.username)
+            progressData[user.username] = Math.round(avgProgress)
+          }),
+        )
+        setUserProgress(progressData)
+      } catch (error) {
+        console.error('Error fetching user progress in component:', error)
+      }
+    }
+
+    fetchUserProgress()
+  }, [users]) // Efek dijalankan ketika nilai users berubah
+
+  const filteredUsers = users.filter((user) => user.userType === 'user')
 
   return (
     <>
@@ -265,7 +285,7 @@ const Peserta = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {users.map((user) => (
+                  {filteredUsers.map((user) => (
                     <CTableRow v-for="item in tableItems" user={user} key={user.username}>
                       <CTableDataCell className="text-center">
                         <div className="d-flex align-items-center justify-content-center">
@@ -289,9 +309,9 @@ const Peserta = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>
-                          <strong>70%</strong>
+                          <strong>{userProgress[user.username]}%</strong>
                         </div>
-                        <CProgress thin color="info" value="70" />
+                        <CProgress thin color="info" value={userProgress[user.username]} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
                         <CIcon

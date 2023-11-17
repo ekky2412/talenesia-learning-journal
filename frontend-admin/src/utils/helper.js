@@ -1,44 +1,32 @@
+import { apiUrl } from 'src/config'
+
 export const calculateStatistics = (users) => {
-  const totalParticipants = users.length
-  const maleParticipants = users.filter((user) => user.gender === 'Male').length
-  const femaleParticipants = users.filter((user) => user.gender === 'Female').length
-  const averageProgress = users.reduce((sum, user) => sum + user.progress, 0) / totalParticipants
+  const filteredUsers = users.filter((user) => user.userType === 'user')
+  const totalParticipants = filteredUsers.length
+  const maleParticipants = filteredUsers.filter((user) => user.gender === 'Male').length
+  const femaleParticipants = filteredUsers.filter((user) => user.gender === 'Female').length
 
   return {
     totalParticipants,
     maleParticipants,
     femaleParticipants,
-    averageProgress: averageProgress.toFixed(2),
   }
 }
 
-export const calculateProgressByTheme = (progressData) => {
-  // Create an object to store the progress for each theme
-  const themeProgress = {}
+export const averageProgressUser = async (username) => {
+  try {
+    const response = await fetch(`${apiUrl}/api/progress/peserta/${username}`)
+    const data = await response.json()
 
-  // Iterate through the data and calculate progress for each theme
-  progressData.forEach((item) => {
-    const theme = `Tema${item.noTema}`
-    const hasAnswer = item.jawaban && item.jawaban.trim() !== '' // Check if there is an answer
+    // Hitung rata-rata persentase
+    const totalPercentage = data.data.reduce((acc, theme) => acc + theme.percentage, 0)
+    const avgProgress = data.data.length ? totalPercentage / data.data.length : 0
 
-    // If the theme is not in the themeProgress object, initialize it with the current answer status
-    if (!themeProgress[theme]) {
-      themeProgress[theme] = { total: 1, answered: hasAnswer ? 1 : 0 }
-    } else {
-      // If the theme is already in the themeProgress object, increment the total and answered counts
-      themeProgress[theme].total += 1
-      themeProgress[theme].answered += hasAnswer ? 1 : 0
-    }
-  })
-
-  // Calculate the progress percentage for each theme
-  Object.keys(themeProgress).forEach((theme) => {
-    themeProgress[theme].progress = Math.round(
-      (themeProgress[theme].answered / themeProgress[theme].total) * 100,
-    )
-  })
-
-  return themeProgress
+    return avgProgress
+  } catch (error) {
+    console.error('Error fetching user progress:', error)
+    throw error
+  }
 }
 
 export const getRandomColor = () => {

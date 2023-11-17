@@ -14,7 +14,6 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiUrl } from 'src/config'
-import { calculateProgressByTheme } from 'src/utils/helper'
 
 const DetailPeserta = () => {
   const { username } = useParams()
@@ -30,8 +29,7 @@ const DetailPeserta = () => {
     city: userDetail.city,
     phoneNo: userDetail.phoneNo,
   })
-  const [progressData, setProgressData] = useState([])
-  const [themeProgress, setThemeProgress] = useState({})
+  const [progress, setProgress] = useState([])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -79,30 +77,21 @@ const DetailPeserta = () => {
     }
   }
 
-  const getProgressTheme = async () => {
+  const getUserProgress = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/journal/${username}`)
+      const response = await fetch(`${apiUrl}/api/progress/peserta/${username}`)
       const data = await response.json()
-      setProgressData(data)
+      setProgress(data.data || []) // Kembalikan data.data atau array kosong jika tidak ada data
     } catch (error) {
-      console.log(error)
+      console.error('Error fetching user progress:', error)
     }
   }
 
   useEffect(() => {
     getUserDetail()
-    getProgressTheme()
+    getUserProgress()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username])
-
-  useEffect(() => {
-    // Check if progressData is an array before calculating theme progress
-    if (Array.isArray(progressData)) {
-      setThemeProgress(calculateProgressByTheme(progressData))
-    } else {
-      console.error('Invalid progressData format. Expected an array.')
-    }
-  }, [progressData])
 
   const handleWhatsAppClick = () => {
     const whatsappLink = `https://wa.me/${userDetail.phoneNo}`
@@ -252,7 +241,22 @@ const DetailPeserta = () => {
             <h1 className="text-center mb-5">Progress</h1>
             <CRow className="justify-content-center">
               <CCol xs={10} md={10} xl={10}>
-                {Object.keys(themeProgress).length === 0 ? (
+                {progress.map((item, username) => (
+                  <div className="progress-group mb-5" key={username}>
+                    <div className="progress-group-prepend">
+                      <span className="text-medium-emphasis large">
+                        <Link to={`../jurnal/tema${item.theme}`}>Tema {item.theme}</Link>
+                      </span>
+                    </div>
+                    <div className="progress-group-bars">
+                      <CProgress thin color="info" value={item.percentage} />
+                      <div>
+                        <strong>{item.percentage}%</strong>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {/* {Object.keys(themeProgress).length === 0 ? (
                   <div className="text-center">
                     <h1>Belum ada jurnal yang dikerjakan.</h1>
                   </div>
@@ -272,7 +276,7 @@ const DetailPeserta = () => {
                       </div>
                     </div>
                   ))
-                )}
+                )} */}
               </CCol>
             </CRow>
           </CCardBody>
