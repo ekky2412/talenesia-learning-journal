@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
-  CAvatar,
   CCard,
   CCardBody,
   CCardHeader,
@@ -16,251 +15,41 @@ import {
   CTableRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilCheckCircle, cilPeople, cilUser, cilUserFemale, cilXCircle } from '@coreui/icons'
+import { cilCheckCircle, cilPeople, cilXCircle } from '@coreui/icons'
 
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
+import { apiUrl } from 'src/config'
+import { getRandomColor } from 'src/utils/helper'
 
 const Tema1 = () => {
-  const tableExample = [
-    {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Yiorgos Avraamu',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      progress: {
-        value: 50,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan3: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan4: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan5: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-    {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Avram Tarasios',
-        new: false,
-        registered: 'Jan 1, 2021',
-      },
-      progress: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan3: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan4: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan5: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2021' },
-      progress: {
-        value: 74,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan3: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan4: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan5: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-    {
-      avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2021' },
-      city: 'Solo',
-      progress: {
-        value: 98,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan3: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan4: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan5: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-    {
-      avatar: { src: avatar5, status: 'success' },
-      user: {
-        name: 'Agapetus Tadeáš',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      progress: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan3: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan4: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan5: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-    {
-      avatar: { src: avatar6, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      progress: {
-        value: 43,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      pertanyaan: {
-        pertanyaan1: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan2: {
-          name: 'Selesai',
-          icon: cilCheckCircle,
-        },
-        pertanyaan3: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan4: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan5: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-        pertanyaan6: {
-          name: 'Belum',
-          icon: cilXCircle,
-        },
-      },
-    },
-  ]
+  const [users, setUsers] = useState([])
+  const [progressData, setProgressData] = useState({})
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/users`)
+      const data = await response.json()
+      setUsers(data)
+
+      // Fetch progress data for each user
+      data.forEach(async (user) => {
+        const progressResponse = await fetch(`${apiUrl}/api/progress/peserta/${user.username}/1`)
+        const progressData = await progressResponse.json()
+        setProgressData((prevData) => ({
+          ...prevData,
+          [user.username]: progressData,
+        }))
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  const filteredUsers = users.filter((user) => user.userType === 'user')
+
 
   return (
     <>
@@ -277,96 +66,63 @@ const Tema1 = () => {
                     </CTableHeaderCell>
                     <CTableHeaderCell>Peserta</CTableHeaderCell>
                     <CTableHeaderCell>Progress</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 1</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 2</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 3</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 4</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 5</CTableHeaderCell>
-                    <CTableHeaderCell>Pertanyaan 6</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 1</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 2</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 3</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 4</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 5</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Pertanyaan 6</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
+                  {filteredUsers.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
+                        <div className="d-flex align-items-center justify-content-center">
+                          <div
+                            className="rounded-circle text-white"
+                            style={{
+                              width: '2rem',
+                              height: '2rem',
+                              backgroundColor: getRandomColor(),
+                            }}
+                          >
+                            {item.username.charAt(0).toUpperCase()}
+                          </div>
+                        </div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <a href={`../admin/peserta/${item.user.name}`}>{item.user.name}</a>
+                        <a href={`../admin/peserta/${item.username}`}>{item.username}</a>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="clearfix">
                           <div className="float-start">
-                            <strong>{item.progress.value}%</strong>
+                            <strong>{progressData[item.username]?.percentage || 0}%</strong>
                           </div>
                         </div>
-                        <CProgress thin color={item.progress.color} value={item.progress.value} />
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan1.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan1.icon}
+                        <CProgress
+                          thin
+                          color="info"
+                          value={progressData[item.username]?.percentage || 0}
                         />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan2.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan2.icon}
-                        />
+                        <CIcon className="text-success" size="xl" icon={cilCheckCircle} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan3.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan3.icon}
-                        />
+                        <CIcon className="text-success" size="xl" icon={cilCheckCircle} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan4.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan4.icon}
-                        />
+                        <CIcon className="text-success" size="xl" icon={cilCheckCircle} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan5.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan5.icon}
-                        />
+                        <CIcon className="text-danger" size="xl" icon={cilXCircle} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CIcon
-                          className={
-                            item.pertanyaan.pertanyaan6.name === 'Selesai'
-                              ? 'text-success'
-                              : 'text-danger'
-                          }
-                          size="xl"
-                          icon={item.pertanyaan.pertanyaan6.icon}
-                        />
+                        <CIcon className="text-danger" size="xl" icon={cilXCircle} />
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                        <CIcon className="text-danger" size="xl" icon={cilXCircle} />
                       </CTableDataCell>
                     </CTableRow>
                   ))}

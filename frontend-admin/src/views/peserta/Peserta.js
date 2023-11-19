@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
-  CAvatar,
   CButton,
   CCard,
   CCardBody,
@@ -29,122 +28,135 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilPlus, cilTrash, cilUser, cilUserFemale } from '@coreui/icons'
 
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
+import { Link } from 'react-router-dom'
+import { apiUrl } from '../../config'
+import { averageProgressUser, getRandomColor } from 'src/utils/helper'
 
 const Peserta = () => {
-  const tableExample = [
-    {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Yiorgos Avraamu',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      city: 'Jakarta',
-      progress: {
-        value: 50,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      activity: '10 sec ago',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-    {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Avram Tarasios',
-        new: false,
-        registered: 'Jan 1, 2021',
-      },
-      city: 'Bandung',
-      progress: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      activity: '5 minutes ago',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2021' },
-      city: 'Makassar',
-      progress: {
-        value: 74,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'warning',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      activity: '1 hour ago',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-    {
-      avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2021' },
-      city: 'Solo',
-      progress: {
-        value: 98,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'danger',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      activity: 'Last month',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-    {
-      avatar: { src: avatar5, status: 'success' },
-      user: {
-        name: 'Agapetus Tadeáš',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      city: 'Medan',
-      progress: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'primary',
-      },
-      gender: { name: 'Female', icon: cilUserFemale },
-      activity: 'Last week',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-    {
-      avatar: { src: avatar6, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-        new: true,
-        registered: 'Jan 1, 2021',
-      },
-      city: 'Aceh',
-      progress: {
-        value: 43,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
-      },
-      gender: { name: 'Male', icon: cilUser },
-      activity: 'Last week',
-      delete: { name: 'Delete', icon: cilTrash },
-    },
-  ]
-
+  const [users, setUsers] = useState([])
+  const [userProgress, setUserProgress] = useState({})
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    birthday: '',
+    education: '',
+    gender: '',
+    city: '',
+    phoneNo: '',
+  })
   const [visibleAdd, setVisibleAdd] = useState(false)
   const [visibleDelete, setVisibleDelete] = useState(false)
+  const [userToDelete, setUserToDelete] = useState(null)
   const [validated, setValidated] = useState(false)
-  const handleSubmit = (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/users`)
+      const data = await response.json()
+      setUsers(data)
+    } catch (error) {
+      console.log(error)
     }
+  }
+
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user)
+    setVisibleDelete(true)
+  }
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/users/delete/${userToDelete._id}`, {
+        method: 'POST',
+      })
+
+      if (response.ok) {
+        alert('User deleted successfully')
+        setVisibleDelete(false)
+        getUsers()
+      } else {
+        alert('Failed to delete user')
+      }
+    } catch (error) {
+      alert('Error deleting user:', error)
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    const form = event.currentTarget
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (form.checkValidity()) {
+      // Form is valid, proceed with API call
+      try {
+        const response = await fetch(`${apiUrl}/api/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+            email: formData.email,
+            userType: 'user', // You can customize this based on your requirements
+            birthday: formData.birthday, // Optional: Add birthday if available
+            education: formData.education, // Optional: Add education if available
+            city: formData.city,
+            gender: formData.gender,
+            phoneNo: formData.phoneNo, // Optional: Add phone number if available
+          }),
+        })
+
+        if (response.ok) {
+          // API call successful, handle the response as needed
+          setVisibleAdd(false)
+          alert('User added successfully!')
+        } else {
+          // API call failed, handle the error
+          alert('Error adding user:', response.statusText)
+        }
+      } catch (error) {
+        alert('Error adding user:', error.message)
+      }
+    }
+    getUsers()
     setValidated(true)
   }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
+  }
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        const progressData = {}
+        await Promise.all(
+          users.map(async (user) => {
+            const avgProgress = await averageProgressUser(user.username)
+            progressData[user.username] = Math.round(avgProgress)
+          }),
+        )
+        setUserProgress(progressData)
+      } catch (error) {
+        console.error('Error fetching user progress in component:', error)
+      }
+    }
+
+    fetchUserProgress()
+  }, [users]) // Efek dijalankan ketika nilai users berubah
+
+  const filteredUsers = users.filter((user) => user.userType === 'user')
 
   return (
     <>
@@ -153,7 +165,7 @@ const Peserta = () => {
           <CCard className="mb-4">
             <CCardHeader>Daftar Peserta</CCardHeader>
             <CCardBody>
-              <CButton color="primary" className="mb-2" onClick={() => setVisibleAdd(!visibleAdd)}>
+              <CButton color="primary" className="mb-4" onClick={() => setVisibleAdd(!visibleAdd)}>
                 <CIcon icon={cilPlus} className="me-2" />
                 Tambah Peserta
               </CButton>
@@ -169,54 +181,104 @@ const Peserta = () => {
                 <CModalBody>
                   <CForm
                     className="row g-3 needs-validation"
+                    id="userForm"
                     noValidate
                     validated={validated}
                     onSubmit={handleSubmit}
                   >
-                    <CCol md={4}>
-                      <CFormInput
-                        type="text"
-                        defaultValue="Mark"
-                        feedbackValid="Looks good!"
-                        id="validationCustom01"
-                        label="First name"
-                        required
-                      />
-                    </CCol>
-                    <CCol md={4}>
-                      <CFormInput
-                        type="text"
-                        defaultValue="Otto"
-                        feedbackValid="Looks good!"
-                        id="validationCustom02"
-                        label="Last name"
-                        required
-                      />
-                    </CCol>
-                    <CCol md={4}>
-                      <CFormLabel htmlFor="validationCustomUsername">Email</CFormLabel>
+                    <CCol md={12}>
+                      <CFormLabel htmlFor="validationCustomEmail">Email</CFormLabel>
                       <CInputGroup className="has-validation">
                         <CFormInput
                           type="email"
-                          id="exampleFormControlInput1"
+                          id="email"
+                          name="email"
                           placeholder="name@example.com"
                           feedbackValid="Must be 8-20 characters long."
                           aria-describedby="exampleFormControlInputHelpInline"
+                          value={formData.email}
+                          onChange={handleChange}
                           required
                         />
                       </CInputGroup>
+                    </CCol>
+                    <CCol md={12}>
+                      <CFormLabel htmlFor="validationCustomUsername">Username</CFormLabel>
+                      <CInputGroup className="has-validation">
+                        <CFormInput
+                          type="text"
+                          feedbackValid="Looks good!"
+                          id="username"
+                          name="username"
+                          placeholder="username"
+                          value={formData.username}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+                    </CCol>
+                    <CCol md={12}>
+                      <CFormLabel htmlFor="validationCustomUsername">Password</CFormLabel>
+                      <CInputGroup className="has-validation">
+                        <CFormInput
+                          type="password"
+                          id="password"
+                          name="password"
+                          placeholder="password"
+                          feedbackValid="Must be 8-20 characters long."
+                          aria-describedby="exampleFormControlInputHelpInline"
+                          value={formData.password}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+                    </CCol>
+                    <CCol md={6}>
+                      <CFormSelect
+                        aria-describedby="validationCustom04Feedback"
+                        feedbackInvalid="Please select a valid education."
+                        id="education"
+                        name="education"
+                        label="Education"
+                        value={formData.education}
+                        onChange={handleChange}
+                      >
+                        <option disabled>Choose...</option>
+                        <option value="SMA/SMK">SMA/SMK</option>
+                        <option value="D1">D1</option>
+                        <option value="D2">D2</option>
+                        <option value="D3">D3</option>
+                        <option value="D4">D4</option>
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                        <option value="S3">S3</option>
+                      </CFormSelect>
+                    </CCol>
+                    <CCol md={6}>
+                      <CFormInput
+                        type="date"
+                        aria-describedby="validationCustom03Feedback"
+                        feedbackInvalid="Please provide a valid birthday."
+                        id="birthday"
+                        name="birthday"
+                        label="Birthday"
+                        value={formData.birthday}
+                        onChange={handleChange}
+                      />
                     </CCol>
                     <CCol md={4}>
                       <CFormSelect
                         aria-describedby="validationCustom04Feedback"
                         feedbackInvalid="Please select a valid gender."
-                        id="validationCustom04"
+                        id="gender"
+                        name="gender"
                         label="Gender"
-                        required
+                        value={formData.gender}
+                        onChange={handleChange}
                       >
                         <option disabled>Choose...</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                       </CFormSelect>
                     </CCol>
                     <CCol md={8}>
@@ -224,9 +286,23 @@ const Peserta = () => {
                         type="text"
                         aria-describedby="validationCustom03Feedback"
                         feedbackInvalid="Please provide a valid city."
-                        id="validationCustom03"
+                        id="city"
+                        name="city"
                         label="City"
-                        required
+                        value={formData.city}
+                        onChange={handleChange}
+                      />
+                    </CCol>
+                    <CCol md={12}>
+                      <CFormInput
+                        type="tel"
+                        aria-describedby="validationCustom03Feedback"
+                        feedbackInvalid="Please provide a valid phone."
+                        id="phoneNo"
+                        name="phoneNo"
+                        label="Phone Number"
+                        value={formData.phoneNo}
+                        onChange={handleChange}
                       />
                     </CCol>
                   </CForm>
@@ -235,7 +311,9 @@ const Peserta = () => {
                   <CButton color="secondary" onClick={() => setVisibleAdd(false)}>
                     Close
                   </CButton>
-                  <CButton color="primary">Add</CButton>
+                  <CButton color="primary" type="submit" form="userForm">
+                    Add
+                  </CButton>
                 </CModalFooter>
               </CModal>
               <CTable align="middle" className="mb-0 border" hover responsive>
@@ -249,50 +327,52 @@ const Peserta = () => {
                     <CTableHeaderCell>Progress</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Gender</CTableHeaderCell>
                     <CTableHeaderCell>Activity</CTableHeaderCell>
-                    <CTableHeaderCell>Action</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
+                  {filteredUsers.map((user) => (
+                    <CTableRow v-for="item in tableItems" user={user} key={user.username}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <a href={`peserta/${item.user.name}`}>{item.user.name}</a>
-                        <div className="small text-medium-emphasis">
-                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                          {item.user.registered}
-                        </div>
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <strong>{item.city}</strong>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div className="clearfix">
-                          <div className="float-start">
-                            <strong>{item.progress.value}%</strong>
-                          </div>
-                          <div className="float-end">
-                            <small className="text-medium-emphasis">{item.progress.period}</small>
+                        <div className="d-flex align-items-center justify-content-center">
+                          <div
+                            className="rounded-circle text-white"
+                            style={{
+                              width: '2rem',
+                              height: '2rem',
+                              backgroundColor: getRandomColor(),
+                            }}
+                          >
+                            {user.username.charAt(0).toUpperCase()}
                           </div>
                         </div>
-                        <CProgress thin color={item.progress.color} value={item.progress.value} />
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <Link to={`../admin/peserta/${user.username}`}>{user.username}</Link>
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                        <strong>{user.city}</strong>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <div>
+                          <strong>{userProgress[user.username]}%</strong>
+                        </div>
+                        <CProgress thin color="info" value={userProgress[user.username]} />
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
                         <CIcon
-                          className={item.gender.name === 'Female' ? 'text-danger' : 'text-info'}
+                          className={user.gender === 'Female' ? 'text-danger' : 'text-info'}
                           size="xl"
-                          icon={item.gender.icon}
+                          icon={user.gender === 'Female' ? cilUserFemale : cilUser}
                         />
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>
-                        <strong>{item.activity}</strong>
+                        <strong>{user.activity}</strong>
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CButton color="light" onClick={() => setVisibleDelete(!visibleDelete)}>
-                          <CIcon className="text-danger" size="xl" icon={item.delete.icon} />
+                        <CButton color="light" onClick={() => handleDeleteClick(user)}>
+                          <CIcon className="text-danger" size="xl" icon={cilTrash} />
                         </CButton>
                         <CModal
                           visible={visibleDelete}
@@ -303,13 +383,17 @@ const Peserta = () => {
                             <CModalTitle id="LiveDemoExampleLabel">Hapus Peserta</CModalTitle>
                           </CModalHeader>
                           <CModalBody>
-                            <p>Apakah anda yakin ingin menghapus {item.user.name}?</p>
+                            {userToDelete && (
+                              <p>Apakah anda yakin ingin menghapus {userToDelete.username}?</p>
+                            )}
                           </CModalBody>
                           <CModalFooter>
                             <CButton color="secondary" onClick={() => setVisibleDelete(false)}>
                               Close
                             </CButton>
-                            <CButton color="danger">Delete</CButton>
+                            <CButton color="danger" onClick={handleDeleteConfirm}>
+                              Delete
+                            </CButton>
                           </CModalFooter>
                         </CModal>
                       </CTableDataCell>
