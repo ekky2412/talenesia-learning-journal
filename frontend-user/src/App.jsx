@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import HeadersTema from './pages/HeadersTema';
 import { TemaRouter } from './router/TemaRouter';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route exact path="/journal/:username/:themeid" element={<HeadersTema />} />
         <Route exact path="/journal/:username/:themeid/:sectionid" element={<TemaRouter />} />
+        <Route exact path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

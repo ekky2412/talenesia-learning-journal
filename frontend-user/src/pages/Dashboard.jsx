@@ -1,22 +1,39 @@
 import {
-    Grid, GridItem, Flex, Image, Spacer, Box, Container, Stack, Text, Menu,
+    Grid, GridItem, Flex, Image, Spacer, Box, Text, Menu,
     MenuButton,
     MenuList, Link as ChakraLink,
     MenuItem, useSteps, Stepper, Step, StepIndicator, StepStatus, StepIcon, StepNumber, StepTitle, StepSeparator
 } from '@chakra-ui/react'
 import logoTalenesia from '../assets/images/logo_talenesia.png'
-import logo2 from '../assets/images/logo-2.png'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { steps } from '../components/commons/TemaTitle'
+import Footer from '../components/commons/Footer'
+import { axiosInstance } from '../services/axiosInstance'
+import { useAuth } from '../services/AuthContext'
+import Navbar from '../components/commons/Navbar'
 
 const Dashboard = () => {
+    const [loading, setLoading] = useState(true)
+    const [indexSteps, setIndexStep] = useState(0);
+    const { user } = useAuth();
 
-    const { activeStep } = useSteps({
-        index: 1,
-        count: steps.length,
-    })
+    useEffect(() => {
+        axiosInstance.get('/progress/peserta/Rezkyyy')
+            .then((response) => {
+                let latestIndex = 0;
+                for (let i = response.data.data.length - 1; i >= 0; i--) {
+                    if (response.data.data[i].finished) {
+                        latestIndex = i + 1;
+                        break;
+                    }
+                }
+                setIndexStep(latestIndex);
+                setLoading(false)
+            }).catch((error) =>
+                console.error(error))
+    }, [loading])
+
 
     return (
         <Grid
@@ -29,34 +46,12 @@ const Dashboard = () => {
             color='blackAlpha.700'
             fontWeight='bold'
         >
-            <GridItem p='3' px='8' area={'header'} >
-                <Flex minWidth='max-content' alignItems='center' gap='2'>
-                    <Image src={logoTalenesia} w='150px'></Image>
-                    <Spacer />
-                    <Menu>
-                        <MenuButton padding={1}>
-                            <Flex alignItems={'center'} gap={3}>
-                                <Image
-                                    borderRadius='full'
-                                    boxSize='40px'
-                                    src='https://bit.ly/dan-abramov'
-                                    alt='Dan Abramov'
-                                />
-                                Nama Peserta
-                            </Flex>
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem>Dashboard</MenuItem>
-                            <MenuItem>Logout</MenuItem>
-                        </MenuList>
-                    </Menu>
-                </Flex>
-            </GridItem>
-
+            <Navbar />
+            
             <GridItem>
                 <Flex direction={'column'} gap={10} alignItems={'center'} m={8}>
                     <Text fontSize={'3xl'} color={'#2b388c'}>OUR LEARNING JOURNEY</Text>
-                    <Stepper index={activeStep} orientation='vertical' height='700px' gap='0'>
+                    <Stepper index={indexSteps} orientation='vertical' height='700px' gap='0'>
                         {steps.map((step, index) => (
                             <Step key={index}>
                                 <StepIndicator>
@@ -68,42 +63,21 @@ const Dashboard = () => {
                                 </StepIndicator>
 
                                 <Box>
-                                    <StepTitle>
-                                        {activeStep === index ?
-                                            (<ChakraLink as={ReactRouterLink} to={`/journal/${index + 1}`}>{step.title}</ChakraLink>)
+                                    <StepTitle fontSize={'17px'}>
+                                        {indexSteps === index ?
+                                            (<ChakraLink as={ReactRouterLink} to={`/journal/${user.username}/${index + 1}`}>{step.title}</ChakraLink>)
                                             :
                                             (step.title)
                                         }
                                     </StepTitle>
                                 </Box>
-
                                 <StepSeparator />
                             </Step>
                         ))}
                     </Stepper>
                 </Flex>
             </GridItem>
-
-            <GridItem bg='teal.600' area={'footer'} textColor={'white'}>
-                <Box>
-                    <Container
-                        as={Stack}
-                        maxW={'6xl'}
-                        py={4}
-                        direction={{ base: 'column', md: 'row' }}
-                        spacing={4}
-                        justify={{ base: 'center', md: 'space-between' }}
-                        align={{ base: 'center', md: 'center' }}>
-                        <Image src={logo2} w='130px'></Image>
-                        <Text>© Copyright 2023 by Talenesia</Text>
-                        <Stack direction={'row'} spacing={6}>
-                            <FaTwitter />
-                            <FaYoutube />
-                            <FaInstagram />
-                        </Stack>
-                    </Container>
-                </Box>
-            </GridItem>
+            <Footer />
         </Grid >
     )
 }

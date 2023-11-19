@@ -5,11 +5,12 @@ import {
 import { useParams, Link } from 'react-router-dom'
 import { steps } from '../components/commons/TemaTitle'
 import Navbar from '../components/commons/Navbar'
-
+import { useAuth } from '../services/AuthContext'
 
 const HeadersTema = () => {
     const themeId = useParams().themeid
     const themeShow = steps.filter((step, index) => index + 1 == themeId);
+
     return (
         <Grid
             templateAreas={`"header"

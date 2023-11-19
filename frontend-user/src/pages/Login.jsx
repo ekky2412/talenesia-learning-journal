@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
 import {
     Flex,
     Heading,
@@ -18,13 +17,17 @@ import {
     Grid,
     GridItem,
     Image,
-    Spacer
+    Spacer,
+    useToast
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import logoTalenesia from '../assets/images/logo_talenesia.png'
 import loginbg from '../assets/login.jpg'
 import Footer from "../components/commons/Footer";
 import { useMediaQuery } from "@chakra-ui/react";
+import { axiosInstance } from "../services/axiosInstance";
+import { useAuth } from "../services/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -32,12 +35,50 @@ const CFaLock = chakra(FaLock);
 const Login = () => {
     const [isLargerThanMd] = useMediaQuery("(min-width: 768px)");
     const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    console.log(email)
+    const toast = useToast()
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleShowClick = () => setShowPassword(!showPassword);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axiosInstance.post('/login/auth', {
+            username: username,
+            password: password
+        }).then((response) => {
+            if (response.data.data.userType === 'user') {
+                toast({
+                    title: response.data.message,
+                    status: 'success',
+                    duration: 5000,
+                    position: 'top-right',
+                    isClosable: true,
+                })
+                login(response.data.data)
+                navigate('/dashboard')
+
+            } else {
+                toast({
+                    title: 'Login Failed',
+                    status: 'error',
+                    duration: 5000,
+                    position: 'top-right',
+                    isClosable: true,
+                })
+            }
+        }
+        ).catch((error) =>
+            toast({
+                title: error.response.data.message,
+                status: 'error',
+                duration: 5000,
+                position: 'top-right',
+                isClosable: true,
+            }))
+    }
 
 
     return (
@@ -74,7 +115,7 @@ const Login = () => {
                             <Avatar bg="teal.500" />
                             <Heading color="teal.400">Masuk Akun Talenesia</Heading>
                             <Box minW={{ base: "100%", md: "468px" }}>
-                                <form >
+                                <form onSubmit={(e) => handleSubmit(e)} >
                                     <Stack
                                         spacing={7}
                                         p="2rem"
@@ -88,10 +129,10 @@ const Login = () => {
                                                     children={<CFaUserAlt color="gray.300" />}
                                                 />
                                                 <Input
-                                                    type="email"
-                                                    placeholder="Email Address"
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    type="text"
+                                                    placeholder="Username"
+                                                    value={username}
+                                                    onChange={(e) => setUsername(e.target.value)}
                                                 />
                                             </InputGroup>
                                         </FormControl>
@@ -127,7 +168,6 @@ const Login = () => {
                                             colorScheme="teal"
                                             width="full"
                                         >Masuk</Button>
-
                                     </Stack>
                                 </form>
                             </Box>

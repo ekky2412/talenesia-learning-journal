@@ -1,10 +1,17 @@
 import React from 'react'
 import { Spacer, Menu, MenuButton, MenuList, MenuItem, Flex, Image } from '@chakra-ui/react'
 import logoTalenesia from '../../assets/images/logo_talenesia.png'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../services/AuthContext'
 
 const Navbar = () => {
-    const username = useParams().username
+    const { user, logout } = useAuth()
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     return (
         <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -17,14 +24,14 @@ const Navbar = () => {
                             borderRadius='full'
                             boxSize='40px'
                             src='https://bit.ly/dan-abramov'
-                            alt='Dan Abramov'
+                            alt='User Profile'
                         />
-                        {username}
+                        {user.username}
                     </Flex>
                 </MenuButton>
                 <MenuList>
-                    <MenuItem>Dashboard</MenuItem>
-                    <MenuItem>Logout</MenuItem>
+                    <Link to='/dashboard'><MenuItem>Dashboard</MenuItem></Link>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
             </Menu>
         </Flex>
