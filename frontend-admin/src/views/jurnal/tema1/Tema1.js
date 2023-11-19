@@ -50,6 +50,7 @@ const Tema1 = () => {
 
   const filteredUsers = users.filter((user) => user.userType === 'user')
 
+
   return (
     <>
       <CRow>

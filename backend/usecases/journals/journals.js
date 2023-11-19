@@ -164,9 +164,13 @@ export const getPesertaProgressByUseCase = async (username) => {
   });
   let hasilNew = [];
   hasil.forEach((element, i = 0) => {
+    let finished;
+    if (element != 100) finished = false;
+    else finished = true;
     hasilNew[i] = {
       theme: i + 1,
       percentage: element,
+      finished: finished,
     };
   });
   return hasilNew;

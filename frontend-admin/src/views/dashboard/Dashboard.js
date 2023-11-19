@@ -107,11 +107,13 @@ const Dashboard = () => {
           progress={{ color: 'success', value: averageProgress.toFixed(2) }}
         />
       </CCardGroup>
+
       <CRow>
         <CCol xs>
           <CCard className="mb-4">
             <CCardHeader>Progress Peserta</CCardHeader>
             <CCardBody>
+
               <CRow className="justify-content-center">
                 <CCol xs={10} md={10} xl={10} className="pt-5">
                   {progress.map((item, index) => (
@@ -172,6 +174,7 @@ const Dashboard = () => {
                           <strong>{userProgress[user.username]}%</strong>
                         </div>
                         <CProgress thin color="info" value={userProgress[user.username]} />
+
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>

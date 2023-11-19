@@ -49,7 +49,6 @@ const Tema2 = () => {
   }, [])
 
   const filteredUsers = users.filter((user) => user.userType === 'user')
-
   return (
     <>
       <CRow>
@@ -92,6 +91,7 @@ const Tema2 = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <a href={`../admin/peserta/${item.username}`}>{item.username}</a>
+
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="clearfix">
