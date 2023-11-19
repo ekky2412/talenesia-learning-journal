@@ -39,8 +39,11 @@ const Peserta = () => {
     email: '',
     username: '',
     password: '',
+    birthday: '',
+    education: '',
     gender: '',
     city: '',
+    phoneNo: '',
   })
   const [visibleAdd, setVisibleAdd] = useState(false)
   const [visibleDelete, setVisibleDelete] = useState(false)
@@ -69,14 +72,14 @@ const Peserta = () => {
       })
 
       if (response.ok) {
-        console.log('User deleted successfully')
+        alert('User deleted successfully')
         setVisibleDelete(false)
         getUsers()
       } else {
-        console.error('Failed to delete user')
+        alert('Failed to delete user')
       }
     } catch (error) {
-      console.error('Error deleting user:', error)
+      alert('Error deleting user:', error)
     }
   }
 
@@ -98,24 +101,24 @@ const Peserta = () => {
             password: formData.password,
             email: formData.email,
             userType: 'user', // You can customize this based on your requirements
-            birthday: null, // Optional: Add birthday if available
-            education: null, // Optional: Add education if available
+            birthday: formData.birthday, // Optional: Add birthday if available
+            education: formData.education, // Optional: Add education if available
             city: formData.city,
             gender: formData.gender,
-            phoneNo: null, // Optional: Add phone number if available
+            phoneNo: formData.phoneNo, // Optional: Add phone number if available
           }),
         })
 
         if (response.ok) {
           // API call successful, handle the response as needed
-          console.log('User added successfully!')
           setVisibleAdd(false)
+          alert('User added successfully!')
         } else {
           // API call failed, handle the error
-          console.error('Error adding user:', response.statusText)
+          alert('Error adding user:', response.statusText)
         }
       } catch (error) {
-        console.error('Error adding user:', error.message)
+        alert('Error adding user:', error.message)
       }
     }
     getUsers()
@@ -230,6 +233,39 @@ const Peserta = () => {
                         />
                       </CInputGroup>
                     </CCol>
+                    <CCol md={6}>
+                      <CFormSelect
+                        aria-describedby="validationCustom04Feedback"
+                        feedbackInvalid="Please select a valid education."
+                        id="education"
+                        name="education"
+                        label="Education"
+                        value={formData.education}
+                        onChange={handleChange}
+                      >
+                        <option disabled>Choose...</option>
+                        <option value="SMA/SMK">SMA/SMK</option>
+                        <option value="D1">D1</option>
+                        <option value="D2">D2</option>
+                        <option value="D3">D3</option>
+                        <option value="D4">D4</option>
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                        <option value="S3">S3</option>
+                      </CFormSelect>
+                    </CCol>
+                    <CCol md={6}>
+                      <CFormInput
+                        type="date"
+                        aria-describedby="validationCustom03Feedback"
+                        feedbackInvalid="Please provide a valid birthday."
+                        id="birthday"
+                        name="birthday"
+                        label="Birthday"
+                        value={formData.birthday}
+                        onChange={handleChange}
+                      />
+                    </CCol>
                     <CCol md={4}>
                       <CFormSelect
                         aria-describedby="validationCustom04Feedback"
@@ -239,7 +275,6 @@ const Peserta = () => {
                         label="Gender"
                         value={formData.gender}
                         onChange={handleChange}
-                        required
                       >
                         <option disabled>Choose...</option>
                         <option value="Male">Male</option>
@@ -256,7 +291,18 @@ const Peserta = () => {
                         label="City"
                         value={formData.city}
                         onChange={handleChange}
-                        required
+                      />
+                    </CCol>
+                    <CCol md={12}>
+                      <CFormInput
+                        type="tel"
+                        aria-describedby="validationCustom03Feedback"
+                        feedbackInvalid="Please provide a valid phone."
+                        id="phoneNo"
+                        name="phoneNo"
+                        label="Phone Number"
+                        value={formData.phoneNo}
+                        onChange={handleChange}
                       />
                     </CCol>
                   </CForm>

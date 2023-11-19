@@ -19,39 +19,47 @@ const DetailPeserta = () => {
   const { username } = useParams()
   const [userDetail, setUserDetail] = useState({})
   const [formData, setFormData] = useState({
-    username: userDetail.username,
-    password: '', // You should handle the password securely, possibly using another method
-    email: userDetail.email,
-    userType: 'user', // Assuming a default value for userType
-    birthday: userDetail.birthday,
-    gender: userDetail.gender,
-    education: userDetail.education,
-    city: userDetail.city,
-    phoneNo: userDetail.phoneNo,
+    email: '',
+    username: '',
+    password: '',
+    birthday: '',
+    education: '',
+    gender: '',
+    city: '',
+    phoneNo: '',
   })
   const [progress, setProgress] = useState([])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    if (formData[name] !== value) {
-      setFormData({ ...formData, [name]: value })
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
   }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      // Assuming the user ID is available in userDetail.id
       const response = await fetch(`${apiUrl}/api/users/update/${userDetail._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          username: formData.username || userDetail.username,
+          password: userDetail.password,
+          email: userDetail.email,
+          userType: 'user',
+          birthday: formData.birthday || userDetail.birthday,
+          education: formData.education || userDetail.education,
+          city: formData.city || userDetail.city,
+          gender: formData.gender || userDetail.gender,
+          phoneNo: formData.phoneNo || userDetail.phoneNo,
+        }),
       })
 
-      console.log(formData)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
@@ -59,11 +67,9 @@ const DetailPeserta = () => {
       const responseData = await response.json()
 
       getUserDetail()
-      // Handle success, e.g., show a success message to the user
-      console.log('User updated successfully', responseData)
+      alert('User updated successfully', responseData)
     } catch (error) {
-      // Handle error, e.g., show an error message to the user
-      console.error('Error updating user', error.message)
+      alert('Error updating user', error.message)
     }
   }
 
@@ -81,7 +87,7 @@ const DetailPeserta = () => {
     try {
       const response = await fetch(`${apiUrl}/api/progress/peserta/${username}`)
       const data = await response.json()
-      setProgress(data.data || []) // Kembalikan data.data atau array kosong jika tidak ada data
+      setProgress(data.data || [])
     } catch (error) {
       console.error('Error fetching user progress:', error)
     }
@@ -97,6 +103,10 @@ const DetailPeserta = () => {
     const whatsappLink = `https://wa.me/${userDetail.phoneNo}`
     window.open(whatsappLink, '_blank')
   }
+
+  const formattedBirthday = userDetail.birthday
+    ? new Date(userDetail.birthday).toISOString().split('T')[0]
+    : ''
 
   return (
     <>
@@ -161,7 +171,7 @@ const DetailPeserta = () => {
                     type="date"
                     id="inputBirthday"
                     name="birthday"
-                    defaultValue={userDetail.birthday}
+                    defaultValue={formattedBirthday}
                     onChange={handleInputChange}
                   />
                 </CCol>
