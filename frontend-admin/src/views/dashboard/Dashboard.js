@@ -19,12 +19,12 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilUser, cilUserFemale, cilSpeedometer } from '@coreui/icons'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { apiUrl } from 'src/config'
 import { averageProgressUser, calculateStatistics, getRandomColor } from 'src/utils/helper'
 
 const Dashboard = () => {
-  // const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
+  const navigate = useNavigate()
   const [users, setUsers] = useState([])
   const [progress, setProgress] = useState([])
   const [userProgress, setUserProgress] = useState({})
@@ -71,7 +71,15 @@ const Dashboard = () => {
     }
 
     fetchUserProgress()
-  }, [users]) // Efek dijalankan ketika nilai users berubah
+  }, [users])
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+
+    if (!authToken) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   const { totalParticipants, maleParticipants, femaleParticipants } = calculateStatistics(users)
   const averageProgress = progress.length
@@ -113,7 +121,6 @@ const Dashboard = () => {
           <CCard className="mb-4">
             <CCardHeader>Progress Peserta</CCardHeader>
             <CCardBody>
-
               <CRow className="justify-content-center">
                 <CCol xs={10} md={10} xl={10} className="pt-5">
                   {progress.map((item, index) => (
@@ -146,7 +153,7 @@ const Dashboard = () => {
                     </CTableHeaderCell>
                     <CTableHeaderCell>User</CTableHeaderCell>
                     <CTableHeaderCell>Progress</CTableHeaderCell>
-                    <CTableHeaderCell>Activity</CTableHeaderCell>
+                    {/* <CTableHeaderCell>Activity</CTableHeaderCell> */}
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -174,12 +181,11 @@ const Dashboard = () => {
                           <strong>{userProgress[user.username]}%</strong>
                         </div>
                         <CProgress thin color="info" value={userProgress[user.username]} />
-
                       </CTableDataCell>
-                      <CTableDataCell>
+                      {/* <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>
                         <strong>{user.activity}</strong>
-                      </CTableDataCell>
+                      </CTableDataCell> */}
                     </CTableRow>
                   ))}
                 </CTableBody>

@@ -19,8 +19,10 @@ import { cilCheckCircle, cilPeople, cilXCircle } from '@coreui/icons'
 
 import { apiUrl } from 'src/config'
 import { getRandomColor } from 'src/utils/helper'
+import { useNavigate } from 'react-router-dom'
 
 const Tema2 = () => {
+  const navigate = useNavigate()
   const [users, setUsers] = useState([])
   const [progressData, setProgressData] = useState({})
 
@@ -48,7 +50,16 @@ const Tema2 = () => {
     getUsers()
   }, [])
 
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+
+    if (!authToken) {
+      navigate('/login')
+    }
+  }, [navigate])
+
   const filteredUsers = users.filter((user) => user.userType === 'user')
+
   return (
     <>
       <CRow>
@@ -91,7 +102,6 @@ const Tema2 = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <a href={`../admin/peserta/${item.username}`}>{item.username}</a>
-
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="clearfix">

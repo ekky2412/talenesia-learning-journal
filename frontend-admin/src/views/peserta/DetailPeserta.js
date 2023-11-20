@@ -12,10 +12,11 @@ import {
   CRow,
 } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { apiUrl } from 'src/config'
 
 const DetailPeserta = () => {
+  const navigate = useNavigate()
   const { username } = useParams()
   const [userDetail, setUserDetail] = useState({})
   const [formData, setFormData] = useState({
@@ -98,6 +99,14 @@ const DetailPeserta = () => {
     getUserProgress()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username])
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+
+    if (!authToken) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   const handleWhatsAppClick = () => {
     const whatsappLink = `https://wa.me/${userDetail.phoneNo}`

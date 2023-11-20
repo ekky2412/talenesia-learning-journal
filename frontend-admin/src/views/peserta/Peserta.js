@@ -28,11 +28,12 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilPlus, cilTrash, cilUser, cilUserFemale } from '@coreui/icons'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { apiUrl } from '../../config'
 import { averageProgressUser, getRandomColor } from 'src/utils/helper'
 
 const Peserta = () => {
+  const navigate = useNavigate()
   const [users, setUsers] = useState([])
   const [userProgress, setUserProgress] = useState({})
   const [formData, setFormData] = useState({
@@ -100,21 +101,19 @@ const Peserta = () => {
             username: formData.username,
             password: formData.password,
             email: formData.email,
-            userType: 'user', // You can customize this based on your requirements
-            birthday: formData.birthday, // Optional: Add birthday if available
-            education: formData.education, // Optional: Add education if available
+            userType: 'user',
+            birthday: formData.birthday,
+            education: formData.education,
             city: formData.city,
             gender: formData.gender,
-            phoneNo: formData.phoneNo, // Optional: Add phone number if available
+            phoneNo: formData.phoneNo,
           }),
         })
 
         if (response.ok) {
-          // API call successful, handle the response as needed
           setVisibleAdd(false)
           alert('User added successfully!')
         } else {
-          // API call failed, handle the error
           alert('Error adding user:', response.statusText)
         }
       } catch (error) {
@@ -154,7 +153,15 @@ const Peserta = () => {
     }
 
     fetchUserProgress()
-  }, [users]) // Efek dijalankan ketika nilai users berubah
+  }, [users])
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+
+    if (!authToken) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   const filteredUsers = users.filter((user) => user.userType === 'user')
 
@@ -326,7 +333,7 @@ const Peserta = () => {
                     <CTableHeaderCell className="text-center">City</CTableHeaderCell>
                     <CTableHeaderCell>Progress</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Gender</CTableHeaderCell>
-                    <CTableHeaderCell>Activity</CTableHeaderCell>
+                    {/* <CTableHeaderCell>Activity</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -366,10 +373,10 @@ const Peserta = () => {
                           icon={user.gender === 'Female' ? cilUserFemale : cilUser}
                         />
                       </CTableDataCell>
-                      <CTableDataCell>
+                      {/* <CTableDataCell>
                         <div className="small text-medium-emphasis">Last login</div>
                         <strong>{user.activity}</strong>
-                      </CTableDataCell>
+                      </CTableDataCell> */}
                       <CTableDataCell className="text-center">
                         <CButton color="light" onClick={() => handleDeleteClick(user)}>
                           <CIcon className="text-danger" size="xl" icon={cilTrash} />
