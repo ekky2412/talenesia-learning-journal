@@ -41,7 +41,13 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.0",
     "redux": "4.2.1",
-    "simplebar-react": "^2.4.3"
+    "simplebar-react": "^2.4.3",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.8.8",
+    "react-scripts": "5.0.1",
+    "sass": "^1.63.6",
+    "web-vitals": "^3.3.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

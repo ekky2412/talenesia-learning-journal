@@ -1,0 +1,39 @@
+version: '3'
+services:
+  api:
+    container_name: talenesia-learning-journal-api
+    image: api:1
+    restart: always
+    env_file:
+      - /backend/.env
+    ports: 
+      - 5000:5000
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+  admin:
+    container_name: talenesia-learning-journal-admin
+    image: admin:1
+    restart: always
+    env_file:
+      - frontend-admin/.env
+    ports: 
+      - 4000:4000
+    depends_on:
+      - api
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+  web:
+    container_name: talenesia-learning-journal-app
+    image: web:1
+    restart: always
+    env_file:
+      - frontend-user/.env
+    ports: 
+      - 3000:3000
+    depends_on:
+      - api
+    build:
+      context: ./frontend-user
+      dockerfile: Dockerfile
