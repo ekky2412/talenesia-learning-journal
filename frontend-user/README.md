@@ -3,18 +3,50 @@
 ## Table of Contents
 
 - [Flow Chart](#flow-chart)
-- [Installation](#installation)
-- [Basic usage](#basic-usage)
+- [Pages](#pages)
 
 ## Flow Chart
 
 <img src="../public/learing-journal-flowchart-user.png">
 
-# React + Vite
+## Pages
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### I. Landing Page
 
-Currently, two official plugins are available:
+  <img src="../public/learing-journal-fe-user 1.jpg">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Feature :
+
+- Display a visually appealing welcome message and introduction to the Talenesia Learning Journal.
+
+### II. Login
+
+<img src="../public/learing-journal-fe-user 2.jpg">
+
+Feature :
+
+- Provides a form where users can input username and password to access the application.
+
+### III. Learning Journey
+
+  <img src="../public/learing-journal-fe-user 3.jpg">
+
+Feature :
+
+- Displays a list of user learning journeys.
+
+### IV. Tema
+
+  <img src="../public/learing-journal-fe-user 4.jpg">
+
+Feature :
+
+- Shows a starting screen for each theme's learning process.
+
+### V. Form
+
+  <img src="../public/learing-journal-fe-user 5.jpg">
+
+Feature :
+
+- Provides checklist form, and text where users can input their progress and their feedback to their mentors.

@@ -542,7 +542,7 @@ POST  /api/login/auth
 
 - #### POST /api/login/auth
 
-  **to Login**
+  **to check user credentials, like username and password**
 
   - URL Params
 
