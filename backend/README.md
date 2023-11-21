@@ -57,23 +57,26 @@ The API is built using Node.js and Express.js. The API supports the following en
 ### **Admin**
 
 ```
-GET     /api/users
-POST    /api/users
-GET     /api/users/:username
-POST    /api/users/update/:id
-POST    /api/users/delete/:id
+GET   /api/users
+POST  /api/users
+GET   /api/users/:username
+POST  /api/users/update/:id
+POST  /api/users/delete/:id
 ```
 
 ### **User**
 
 ```
-GET     /api/journal/:username
-GET     /api/journal/tugas/:username/:theme
-POST    /api/journal/tugas/:username/:theme
-GET     /api/journal/:username/:theme
-GET     /api/journal/:username/:theme/:section
-POST    /api/journal/:username/:theme/:section
-POST    /api/login/auth
+GET   /api/progress/tema
+GET   /api/progress/peserta/:username
+GET   /api/progress/peserta/:username/:theme
+GET   /api/journal/:username
+GET   /api/journal/tugas/:username/:theme
+POST  /api/journal/tugas/:username/:theme
+GET   /api/journal/:username/:theme
+GET   /api/journal/:username/:theme/:section
+POST  /api/journal/:username/:theme/:section
+POST  /api/login/auth
 ```
 
 ## iii. List API Request & Response
@@ -158,7 +161,7 @@ POST    /api/login/auth
 
   - URL Params
 
-    None
+    Required: `username=[String]`
 
   - Data Params
 
@@ -188,7 +191,7 @@ POST    /api/login/auth
 
   - URL Params
 
-    None
+    Required: `_id=[String]`
 
   - Data Params
 
@@ -223,9 +226,7 @@ POST    /api/login/auth
 
   - URL Params
 
-    Required:
-
-    - '\_id' [String]
+    Required: `_id=[String]`
 
   - Data Params
 
@@ -270,7 +271,7 @@ POST    /api/login/auth
     "noSoal"    : Number,
     "noTema"    : Number,
     "username"  : String,
-    "jawaban"   : date,
+    "jawaban"   : String,
     "tipeSoal"  : String
 }
 ```
@@ -288,13 +289,111 @@ POST    /api/login/auth
 }
 ```
 
+- #### GET /api/progress/tema
+
+  **returns all themes**
+
+  - URL Params
+
+    None
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        {
+          "theme" : Number,
+          "percentage"  : Number
+        },
+        {
+          "theme" : Number,
+          "percentage"  : Number
+        },
+        ...
+    ]
+    ```
+
+- #### GET /api/progress/peserta/:username
+
+  **returns all progress on a specific username**
+
+  - URL Params
+
+    Required: `username=[String]`
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    {
+      "username": String,
+      "data": [
+        {
+          "theme": Number,
+          "percentage": Number,
+          "finished": boolean
+        },
+        {
+          "theme": Number,
+          "percentage": Number,
+          "finished": boolean
+        },
+        ...
+      ]
+    }
+    ```
+
+- #### GET /api/progress/peserta/:username/:theme
+
+  **return a progress on a specific theme and username**
+
+  - URL Params
+
+    Required:
+
+    - `username=[String]`
+    - `noTema=[Number]`
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    {
+      "username": String,
+      "theme": Number,
+      "percentage": Number,
+    }
+    ```
+
 - #### GET /api/journal/:username
 
   **returns Journal based on the specified username**
 
   - URL Params
 
-    None
+    Required: `username=[String]`
 
   - Data Params
 
@@ -315,3 +414,170 @@ POST    /api/login/auth
     ```
 
 - #### GET /api/journal/tugas/:username/:theme
+
+  **returns Tugas on a specific username and theme**
+
+  - URL Params
+
+    Required:
+
+    - `username=[String]`
+    - `noTema=[Number]`
+
+  - Data Params
+
+    None
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        { "noTema"  : Number,
+          "noTugas" : Number,
+          "username": String,
+          "masukan" : String,
+          "sedangDikerjakan"  : boolean,
+          "sudahDikumpulkan"  : boolean
+        },
+        { "noTema"  : Number,
+          "noTugas" : Number,
+          "username": String,
+          "masukan" : String,
+          "sedangDikerjakan"  : boolean,
+          "sudahDikumpulkan"  : boolean
+        },
+        ...
+    ]
+    ```
+
+- #### POST /api/journal/tugas/:username/:theme
+
+  **Create or Update a tugas on a specific username and theme**
+
+  - URL Params
+
+    Required:
+
+    - `username=[String]`
+    - `noTema=[Number]`
+
+  - Data Params
+
+    ```
+    {
+      noTema  : Number,
+      noTugas : Number,
+      username: String,
+      sedangDikerjakan : boolean,
+      sudahDikumpulkan : boolean,
+      masukan : String,
+    }
+
+    ```
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        { "noTema"  : Number,
+          "noTugas" : Number,
+          "username": String,
+          "masukan" : String,
+          "sedangDikerjakan"  : boolean,
+          "sudahDikumpulkan"  : boolean
+        }
+    ]
+    ```
+
+- #### POST /api/journal/:username/:theme/:section
+
+  **Create or Update a journal on a specific username, theme, and section**
+
+  - URL Params
+
+    Required:
+
+    - `username=[String]`
+    - `noTema=[Number]`
+    - `noSoal=[Number]`
+
+  - Data Params
+
+    ```
+    {
+      noSoal    : Number,
+      noTema    : Number,
+      username  : String,
+      jawaban   : String,
+      tipeSoal  : String
+    }
+
+    ```
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        {
+          "noSoal"    : Number,
+          "noTema"    : Number,
+          "username"  : String,
+          "jawaban"   : String,
+          "tipeSoal"  : String
+        }
+    ]
+    ```
+
+- #### POST /api/login/auth
+
+  **to Login**
+
+  - URL Params
+
+    Required:
+
+    - `username=[String]`
+    - `password=[String]`
+
+  - Data Params
+
+    ```
+    {
+      noSoal    : Number,
+      noTema    : Number,
+      username  : String,
+      jawaban   : String,
+      tipeSoal  : String
+    }
+
+    ```
+
+  - Headers
+
+    Content-Type: application/json
+
+  - Code 200 response :
+
+    ```
+    [
+        {
+          "noSoal"    : Number,
+          "noTema"    : Number,
+          "username"  : String,
+          "jawaban"   : String,
+          "tipeSoal"  : String
+        }
+    ]
+    ```

@@ -103,9 +103,34 @@ REACT_APP_API_ENDPOINT=http://localhost:3001
 npm start
 ```
 
+### Front-End for User
+
+**a. Change to the Client Directory**
+
+```bash
+cd frontend-user
+```
+
+**b. Install Dependencies**
+
+```bash
+npm install
+```
+
+**c. Edit the .env file to configure the server's API endpoint**
+
+```bash
+REACT_APP_API_ENDPOINT=http://localhost:3001
+```
+
+**d. Run the Server**
+
+```bash
+npm start
+```
+
 ## Project Documents
 
-- [Front End Project Documentation](./frontend-admin/README.md)
+- [Front End Admin Project Documentation](./frontend-admin/README.md)
+- [Front End User Project Documentation](./frontend-user/README.md)
 - [Back End Project Documentation](./backend/README.md)
-
-## Project Deployment URL
